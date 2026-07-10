@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gusto — Нишевая парфюмерия</title>
   <style>
-    /* ===== БАЗА ===== */
     * {
       margin: 0;
       padding: 0;
@@ -14,7 +13,7 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      background: #f6f3ef;
+      background: #f2ebe3;
       color: #1c1c1e;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
@@ -26,7 +25,7 @@
       padding: 0 24px 40px;
     }
 
-    /* ===== ЭКРАН-ЗАСТАВКА ===== */
+    /* ===== ЗАСТАВКА ===== */
     .splash {
       position: fixed;
       top: 0;
@@ -40,81 +39,86 @@
       align-items: center;
       justify-content: center;
       z-index: 1000;
-      transition: height 1.2s cubic-bezier(0.77, 0, 0.18, 1),
-                  opacity 0.8s ease;
+      transition: height 1.2s cubic-bezier(0.77, 0, 0.18, 1);
       overflow: hidden;
     }
 
-    /* ===== ЭФФЕКТ РАСПЫЛЕНИЯ (облако тумана) ===== */
-    .splash::before {
-      content: '';
+    /* ===== РАСПЫЛЕНИЕ ===== */
+    .spray-container {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(200,180,160,0.15) 0%, transparent 70%);
-      transform: translate(-50%, -50%);
-      animation: spray 1.6s ease-out forwards;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
     }
 
-    @keyframes spray {
-      0% {
-        width: 0;
-        height: 0;
-        opacity: 0;
-      }
-      40% {
-        opacity: 1;
-      }
-      100% {
-        width: 120vw;
-        height: 120vw;
-        opacity: 0;
-      }
-    }
-
-    /* ===== ВТОРОЙ СЛОЙ ТУМАНА ===== */
-    .splash::after {
-      content: '';
+    .spray-particle {
       position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(220, 200, 180, 0.25), rgba(200, 180, 160, 0.05));
+      opacity: 0;
+      animation: particleFade 1.8s ease-out forwards;
+    }
+
+    .spray-particle:nth-child(1) {
+      width: 300px;
+      height: 300px;
+      top: 20%;
+      left: 10%;
+      animation-delay: 0.0s;
+    }
+    .spray-particle:nth-child(2) {
+      width: 400px;
+      height: 400px;
+      top: 10%;
+      right: 5%;
+      animation-delay: 0.2s;
+      background: radial-gradient(circle, rgba(210, 190, 170, 0.18), transparent);
+    }
+    .spray-particle:nth-child(3) {
+      width: 250px;
+      height: 250px;
+      bottom: 10%;
+      left: 20%;
+      animation-delay: 0.4s;
+    }
+    .spray-particle:nth-child(4) {
+      width: 350px;
+      height: 350px;
+      bottom: 5%;
+      right: 15%;
+      animation-delay: 0.6s;
+      background: radial-gradient(circle, rgba(200, 180, 160, 0.15), transparent);
+    }
+    .spray-particle:nth-child(5) {
+      width: 200px;
+      height: 200px;
       top: 40%;
-      left: 30%;
-      width: 0;
-      height: 0;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(180,160,140,0.10) 0%, transparent 70%);
-      transform: translate(-50%, -50%);
-      animation: spray2 2.0s ease-out 0.3s forwards;
-      pointer-events: none;
+      left: 40%;
+      animation-delay: 0.3s;
+      background: radial-gradient(circle, rgba(230, 215, 200, 0.20), transparent);
     }
 
-    @keyframes spray2 {
+    @keyframes particleFade {
       0% {
-        width: 0;
-        height: 0;
         opacity: 0;
+        transform: scale(0.3);
       }
-      50% {
+      30% {
         opacity: 1;
+        transform: scale(1.2);
+      }
+      70% {
+        opacity: 0.8;
+        transform: scale(1.5);
       }
       100% {
-        width: 80vw;
-        height: 80vw;
         opacity: 0;
+        transform: scale(2.0);
       }
-    }
-
-    .splash.shrink {
-      height: 90px;
-      min-height: 90px;
-      position: relative;
-      z-index: 10;
-      background: #1c1c1e;
-      border-radius: 0 0 40px 40px;
-      box-shadow: 0 4px 30px rgba(0,0,0,0.15);
     }
 
     .splash h1 {
@@ -128,11 +132,6 @@
       z-index: 2;
     }
 
-    .splash.shrink h1 {
-      font-size: clamp(28px, 4vw, 44px);
-      letter-spacing: 10px;
-    }
-
     .splash .sub {
       font-size: clamp(14px, 1.4vw, 20px);
       color: #a89f97;
@@ -142,6 +141,21 @@
       transition: all 0.6s ease;
       opacity: 1;
       z-index: 2;
+    }
+
+    .splash.shrink {
+      height: 90px;
+      min-height: 90px;
+      position: relative;
+      z-index: 10;
+      background: #1c1c1e;
+      border-radius: 0 0 40px 40px;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.15);
+    }
+
+    .splash.shrink h1 {
+      font-size: clamp(28px, 4vw, 44px);
+      letter-spacing: 10px;
     }
 
     .splash.shrink .sub {
@@ -161,18 +175,17 @@
       opacity: 1;
     }
 
-    /* ===== ПОИСК (без лупы) ===== */
+    /* ===== ПОИСК ===== */
     .search-wrap {
       max-width: 460px;
       margin: 20px auto 10px;
-      position: relative;
     }
 
     .search-wrap input {
       width: 100%;
-      padding: 14px 20px;
+      padding: 14px 24px;
       border-radius: 40px;
-      border: 1px solid #ded9d4;
+      border: 1px solid #ddd6ce;
       background: #ffffff;
       font-size: 16px;
       font-weight: 400;
@@ -186,27 +199,26 @@
 
     .search-wrap input:focus {
       border-color: #1c1c1e;
-      background: #ffffff;
       box-shadow: 0 4px 24px rgba(0,0,0,0.06);
     }
 
     .search-wrap input::placeholder {
-      color: #a89f97;
+      color: #b8aaa0;
       font-weight: 300;
     }
 
     .result-count {
       text-align: center;
       font-size: 14px;
-      color: #a89f97;
+      color: #b8aaa0;
       margin-top: 6px;
       font-weight: 300;
       min-height: 24px;
     }
 
-    /* ===== АРОМАТ ДНЯ (НОРМАЛЬНЫЙ ФЛАКОН) ===== */
+    /* ===== АРОМАТ ДНЯ (НОВЫЙ ЦВЕТ) ===== */
     .daily-banner {
-      background: linear-gradient(145deg, #2c2a28 0%, #1a1817 100%);
+      background: linear-gradient(145deg, #f0d5c8 0%, #e8c4b5 100%);
       border-radius: 28px;
       padding: 28px 32px;
       margin: 24px 0 36px;
@@ -215,73 +227,73 @@
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 16px;
-      color: #fff;
-      border: 1px solid #3d3a37;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+      color: #2c2420;
+      border: 1px solid rgba(255,255,255,0.3);
+      box-shadow: 0 8px 40px rgba(180, 130, 110, 0.15);
       position: relative;
       overflow: hidden;
     }
 
-    .daily-banner .flacon-icon {
-      font-size: 48px;
-      line-height: 1;
-      filter: drop-shadow(0 4px 20px rgba(200,180,160,0.15));
-      animation: floatFlacon 3s ease-in-out infinite;
-      display: inline-block;
-    }
-
-    @keyframes floatFlacon {
-      0%, 100% { transform: translateY(0) rotate(-2deg); }
-      50% { transform: translateY(-4px) rotate(2deg); }
+    .daily-banner::before {
+      content: '✦';
+      font-size: 160px;
+      position: absolute;
+      right: -20px;
+      bottom: -50px;
+      color: rgba(255,255,255,0.08);
+      transform: rotate(-6deg);
     }
 
     .daily-banner .label {
       font-size: 12px;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: #c4b8ae;
-      font-weight: 400;
+      color: #7a5f52;
+      font-weight: 500;
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 10px;
+    }
+
+    .daily-banner .label .icon {
+      font-size: 22px;
     }
 
     .daily-banner .name {
-      font-size: 28px;
+      font-size: 30px;
       font-weight: 500;
-      letter-spacing: 1px;
-      color: #f5f0eb;
-      margin-top: 4px;
+      letter-spacing: 0.5px;
+      color: #2c2420;
+      margin-top: 2px;
     }
 
     .daily-banner .brand {
       font-size: 16px;
-      color: #b8aaa0;
-      font-weight: 300;
+      color: #6a5246;
+      font-weight: 400;
     }
 
     .daily-banner .btn-daily {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
-      color: #fff;
+      background: rgba(44, 36, 32, 0.85);
+      border: none;
+      color: #f5f0eb;
       padding: 12px 28px;
       border-radius: 40px;
       text-decoration: none;
       font-weight: 500;
       font-size: 15px;
       transition: 0.25s;
-      backdrop-filter: blur(6px);
       white-space: nowrap;
+      backdrop-filter: blur(4px);
     }
 
     .daily-banner .btn-daily:hover {
-      background: rgba(255,255,255,0.16);
+      background: #2c2420;
       transform: scale(1.02);
     }
 
     .daily-banner .btn-daily small {
       font-weight: 300;
-      color: #b8aaa0;
       margin-right: 6px;
     }
 
@@ -303,23 +315,23 @@
       display: flex;
       flex-direction: column;
       position: relative;
-      border: 1px solid #f0ebe6;
+      border: 1px solid #e8e0da;
       opacity: 0;
-      transform: translateY(30px) scale(0.97);
+      transform: translateY(35px) scale(0.97);
     }
 
     .product.animate {
-      animation: cardIn 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation: cardIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
 
-    .product:nth-child(1) { animation-delay: 0.15s; }
-    .product:nth-child(2) { animation-delay: 0.40s; }
-    .product:nth-child(3) { animation-delay: 0.65s; }
+    .product:nth-child(1) { animation-delay: 0.20s; }
+    .product:nth-child(2) { animation-delay: 0.50s; }
+    .product:nth-child(3) { animation-delay: 0.80s; }
 
     @keyframes cardIn {
       0% {
         opacity: 0;
-        transform: translateY(30px) scale(0.97);
+        transform: translateY(35px) scale(0.97);
       }
       100% {
         opacity: 1;
@@ -343,7 +355,6 @@
       background: #f5f0eb;
       border-radius: 18px;
       margin-bottom: 16px;
-      transition: opacity 0.2s;
     }
 
     .product .brand {
@@ -370,7 +381,6 @@
       font-weight: 400;
     }
 
-    /* ===== ШЛЕЙФ ===== */
     .scent-trail {
       height: 2px;
       width: 56px;
@@ -379,7 +389,6 @@
       background: linear-gradient(90deg, #c9b8a8, #e8ddd0, #c9b8a8);
     }
 
-    /* ===== ЦЕНЫ ===== */
     .prices {
       display: flex;
       flex-wrap: wrap;
@@ -405,7 +414,6 @@
       margin-right: 2px;
     }
 
-    /* ===== БЕЙДЖ "ХИТ" ===== */
     .badge-hit {
       position: absolute;
       top: 16px;
@@ -421,7 +429,6 @@
       box-shadow: 0 2px 16px rgba(192, 57, 43, 0.25);
     }
 
-    /* ===== ИЗБРАННОЕ ===== */
     .favorite-btn {
       position: absolute;
       top: 16px;
@@ -445,14 +452,12 @@
     .favorite-btn:hover {
       transform: scale(1.08);
       background: #fff;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
     }
 
     .favorite-btn.active {
       color: #c0392b;
     }
 
-    /* ===== КНОПКА TG ===== */
     .btn-tg {
       display: inline-block;
       background: #1c1c1e;
@@ -474,7 +479,6 @@
       transform: scale(1.01);
     }
 
-    /* ===== ПАМЯТКА ===== */
     .reminder {
       background: #f5f0eb;
       border-radius: 14px;
@@ -505,7 +509,6 @@
       font-size: 12px;
     }
 
-    /* ===== ПОДВАЛ ===== */
     .footer {
       text-align: center;
       font-size: 13px;
@@ -517,26 +520,21 @@
       letter-spacing: 0.5px;
     }
 
-    /* ===== АДАПТАЦИЯ ===== */
     @media (max-width: 700px) {
       .catalog {
         grid-template-columns: 1fr 1fr;
         gap: 16px 14px;
         padding: 0 0 30px;
       }
-
       .product { padding: 14px 14px 18px; }
       .product .name { font-size: 17px; }
       .prices { font-size: 13px; gap: 4px 8px; }
       .prices span { font-size: 12px; padding: 3px 10px; }
       .btn-tg { font-size: 14px; padding: 12px 0; }
       .reminder { font-size: 12px; padding: 10px 12px; }
-
       .daily-banner { padding: 20px 22px; }
-      .daily-banner .name { font-size: 20px; }
+      .daily-banner .name { font-size: 22px; }
       .daily-banner .btn-daily { font-size: 13px; padding: 10px 18px; }
-      .daily-banner .flacon-icon { font-size: 34px; }
-
       .splash.shrink { height: 70px; min-height: 70px; }
       .splash.shrink h1 { font-size: 24px; letter-spacing: 6px; }
     }
@@ -553,8 +551,15 @@
 </head>
 <body>
 
-<!-- ===== ЭКРАН-ЗАСТАВКА ===== -->
+<!-- ===== ЗАСТАВКА ===== -->
 <div class="splash" id="splash">
+  <div class="spray-container">
+    <div class="spray-particle"></div>
+    <div class="spray-particle"></div>
+    <div class="spray-particle"></div>
+    <div class="spray-particle"></div>
+    <div class="spray-particle"></div>
+  </div>
   <h1>Gusto</h1>
   <div class="sub">нишевая парфюмерия</div>
 </div>
@@ -564,19 +569,15 @@
 
   <div class="container">
 
-    <!-- ПОИСК (без лупы) -->
     <div class="search-wrap">
       <input type="text" id="searchInput" placeholder="Искать аромат или бренд..." autocomplete="off" />
     </div>
     <div class="result-count" id="resultCount"></div>
 
-    <!-- АРОМАТ ДНЯ (с флаконом) -->
+    <!-- АРОМАТ ДНЯ (новый цвет) -->
     <div class="daily-banner" id="dailyBanner">
       <div>
-        <div class="label">
-          <span class="flacon-icon">🧴</span>
-          Аромат дня
-        </div>
+        <div class="label"><span class="icon">✦</span> Аромат дня</div>
         <div class="name" id="dailyName">Загрузка...</div>
         <div class="brand" id="dailyBrand"></div>
       </div>
@@ -586,7 +587,6 @@
     <!-- КАТАЛОГ -->
     <section class="catalog" id="catalog">
 
-      <!-- ТОВАР 1 -->
       <div class="product animate" data-name="Tuscan Leather" data-brand="Tom Ford">
         <span class="badge-hit">Хит</span>
         <button class="favorite-btn" data-product="Tuscan Leather">♡</button>
@@ -613,7 +613,6 @@
         </div>
       </div>
 
-      <!-- ТОВАР 2 -->
       <div class="product animate" data-name="Lost Cherry" data-brand="Tom Ford">
         <span class="badge-hit">Хит</span>
         <button class="favorite-btn" data-product="Lost Cherry">♡</button>
@@ -640,7 +639,6 @@
         </div>
       </div>
 
-      <!-- ТОВАР 3 -->
       <div class="product animate" data-name="Fougere D'Argent" data-brand="Tom Ford">
         <button class="favorite-btn" data-product="Fougere D'Argent">♡</button>
         <img src="https://avatars.mds.yandex.net/i?id=52d3c77ca6edca8d8d1b5d68f4b39a38ed4d7123-11509297-images-thumbs&n=13" alt="Tom Ford Fougere D'Argent" loading="lazy" />
@@ -668,7 +666,6 @@
 
     </section>
 
-    <!-- ПОДВАЛ -->
     <footer class="footer">
       © 2026 Gusto. Все ароматы оригинальны.
     </footer>
@@ -676,22 +673,14 @@
   </div>
 </div>
 
-<!-- ===== СКРИПТЫ ===== -->
 <script>
   (function() {
-    // --- АНИМАЦИЯ ЗАСТАВКИ ---
     const splash = document.getElementById('splash');
     const mainContent = document.getElementById('mainContent');
 
-    setTimeout(() => {
-      splash.classList.add('shrink');
-    }, 600);
+    setTimeout(() => splash.classList.add('shrink'), 600);
+    setTimeout(() => mainContent.classList.add('visible'), 1100);
 
-    setTimeout(() => {
-      mainContent.classList.add('visible');
-    }, 1100);
-
-    // --- АРОМАТ ДНЯ ---
     const products = [
       { name: 'Tuscan Leather', brand: 'Tom Ford', link: 'https://t.me/Kat_offic' },
       { name: 'Lost Cherry', brand: 'Tom Ford', link: 'https://t.me/Kat_offic' },
@@ -717,7 +706,6 @@
     document.getElementById('dailyBrand').textContent = daily.brand;
     document.getElementById('dailyLink').href = daily.link;
 
-    // --- ПОИСК ---
     const searchInput = document.getElementById('searchInput');
     const catalog = document.getElementById('catalog');
     const allProducts = catalog.querySelectorAll('.product');
@@ -740,7 +728,6 @@
       filterProducts(this.value);
     });
 
-    // --- ИЗБРАННОЕ ---
     const favBtns = document.querySelectorAll('.favorite-btn');
 
     function loadFavorites() {
@@ -780,7 +767,6 @@
     });
 
     loadFavorites();
-
   })();
 </script>
 
