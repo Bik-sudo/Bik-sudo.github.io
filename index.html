@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gusto — Нишевая парфюмерия</title>
+  <title>Gusto</title>
   <style>
-    /* ===================================================================
-       1. БАЗОВЫЕ СТИЛИ
-    =================================================================== */
+    /* ==============================================================
+       0. СБРОС И ПЕРЕМЕННЫЕ
+    ============================================================== */
     *,
     *::before,
     *::after {
@@ -17,20 +17,21 @@
     }
 
     :root {
-      --bg-primary: #efe8e0;
+      --bg: #efe8e0;
       --bg-dark: #1a1817;
-      --bg-card: #ffffff;
-      --text-dark: #1c1c1e;
+      --white: #ffffff;
+      --text: #1c1c1e;
       --text-soft: #7a6e64;
       --text-light: #b8aaa0;
       --gold: #c9b8a8;
       --gold-light: #e8ddd0;
       --rose: #ecc8b8;
       --rose-light: #f5dcd0;
-      --shadow: 0 8px 48px rgba(0, 0, 0, 0.06);
-      --shadow-hover: 0 16px 64px rgba(0, 0, 0, 0.10);
-      --radius: 28px;
-      --transition: 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      --shadow: 0 8px 48px rgba(0, 0, 0, 0.04);
+      --shadow-hover: 0 20px 60px rgba(0, 0, 0, 0.10);
+      --radius: 32px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --duration: 0.8s;
     }
 
     html {
@@ -38,19 +39,19 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      background: var(--bg-primary);
-      color: var(--text-dark);
+      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
       line-height: 1.6;
     }
 
     ::-webkit-scrollbar {
-      width: 6px;
+      width: 5px;
     }
     ::-webkit-scrollbar-track {
-      background: var(--bg-primary);
+      background: var(--bg);
     }
     ::-webkit-scrollbar-thumb {
       background: var(--gold);
@@ -68,9 +69,9 @@
       padding: 0 24px 40px;
     }
 
-    /* ===================================================================
-       2. ЗАСТАВКА — МНОГОСЛОЙНАЯ АНИМАЦИЯ GUSTO
-    =================================================================== */
+    /* ==============================================================
+       1. ЗАСТАВКА — GUSTO НА ПОЛЭКРАНА
+    ============================================================== */
     .splash {
       position: fixed;
       top: 0;
@@ -84,13 +85,11 @@
       align-items: center;
       justify-content: center;
       z-index: 1000;
-      transition: height 1.4s cubic-bezier(0.77, 0, 0.18, 1),
-                  background 1.2s ease;
+      transition: height 1.4s var(--ease), background 1.2s ease;
       overflow: hidden;
-      will-change: transform, height;
     }
 
-    /* --- Слой 1: туманная дымка --- */
+    /* --- ТУМАН --- */
     .splash__mist {
       position: absolute;
       top: 0;
@@ -98,41 +97,45 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      overflow: hidden;
       z-index: 0;
     }
 
-    .splash__mist::before {
-      content: '';
-      position: absolute;
-      top: -20%;
-      left: -20%;
-      width: 140%;
-      height: 140%;
-      background: radial-gradient(ellipse at 30% 50%, rgba(180, 160, 140, 0.12) 0%, transparent 60%),
-                  radial-gradient(ellipse at 70% 30%, rgba(200, 180, 160, 0.08) 0%, transparent 50%);
-      animation: mistDrift 8s ease-in-out infinite alternate;
-      will-change: transform;
-    }
-
+    .splash__mist::before,
     .splash__mist::after {
       content: '';
       position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      animation: mistDrift 10s ease-in-out infinite alternate;
+    }
+
+    .splash__mist::before {
+      width: 80%;
+      height: 80%;
       top: -10%;
+      left: -20%;
+      background: radial-gradient(ellipse, rgba(200, 180, 160, 0.10), transparent 70%);
+    }
+
+    .splash__mist::after {
+      width: 70%;
+      height: 70%;
+      bottom: -10%;
       right: -20%;
-      width: 130%;
-      height: 130%;
-      background: radial-gradient(ellipse at 60% 70%, rgba(160, 140, 120, 0.10) 0%, transparent 55%);
-      animation: mistDrift 10s ease-in-out infinite alternate-reverse;
-      will-change: transform;
+      background: radial-gradient(ellipse, rgba(180, 160, 140, 0.08), transparent 70%);
+      animation-delay: -5s;
     }
 
     @keyframes mistDrift {
-      0%   { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(40px, -20px) scale(1.05); }
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+      100% {
+        transform: translate(30px, -20px) scale(1.08);
+      }
     }
 
-    /* --- Слой 2: частицы распыления --- */
+    /* --- РАСПЫЛЕНИЕ --- */
     .splash__spray {
       position: absolute;
       top: 0;
@@ -146,59 +149,70 @@
     .splash__spray span {
       position: absolute;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(220, 200, 185, 0.20), rgba(200, 180, 165, 0.03));
+      background: radial-gradient(circle, rgba(220, 200, 185, 0.18), rgba(200, 180, 165, 0.02));
       opacity: 0;
-      animation: sprayBurst 2.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-      will-change: transform, opacity;
+      animation: sprayBurst 2.4s var(--ease) forwards;
     }
 
     .splash__spray span:nth-child(1) {
-      width: 340px;
-      height: 340px;
-      top: 10%;
-      left: 0%;
+      width: 400px;
+      height: 400px;
+      top: 5%;
+      left: -10%;
       animation-delay: 0.0s;
     }
     .splash__spray span:nth-child(2) {
-      width: 460px;
-      height: 460px;
-      top: -5%;
-      right: -10%;
+      width: 500px;
+      height: 500px;
+      top: -10%;
+      right: -15%;
       animation-delay: 0.2s;
-      background: radial-gradient(circle, rgba(210, 190, 175, 0.16), transparent);
+      background: radial-gradient(circle, rgba(210, 190, 175, 0.14), transparent);
     }
     .splash__spray span:nth-child(3) {
-      width: 280px;
-      height: 280px;
+      width: 300px;
+      height: 300px;
       bottom: 0%;
-      left: 15%;
+      left: 10%;
       animation-delay: 0.4s;
     }
     .splash__spray span:nth-child(4) {
-      width: 400px;
-      height: 400px;
-      bottom: -5%;
-      right: 0%;
+      width: 450px;
+      height: 450px;
+      bottom: -10%;
+      right: -5%;
       animation-delay: 0.6s;
-      background: radial-gradient(circle, rgba(200, 180, 160, 0.14), transparent);
+      background: radial-gradient(circle, rgba(200, 180, 160, 0.12), transparent);
     }
     .splash__spray span:nth-child(5) {
-      width: 220px;
-      height: 220px;
+      width: 250px;
+      height: 250px;
       top: 30%;
       left: 30%;
       animation-delay: 0.3s;
-      background: radial-gradient(circle, rgba(230, 215, 200, 0.18), transparent);
+      background: radial-gradient(circle, rgba(230, 215, 200, 0.16), transparent);
     }
 
     @keyframes sprayBurst {
-      0%   { opacity: 0; transform: scale(0.2) translateY(30px); }
-      25%  { opacity: 1; transform: scale(1.0) translateY(0); }
-      65%  { opacity: 0.7; transform: scale(1.5) translateY(-10px); }
-      100% { opacity: 0; transform: scale(2.2) translateY(-40px); }
+      0% {
+        opacity: 0;
+        transform: scale(0.2) translateY(30px);
+      }
+      30% {
+        opacity: 1;
+        transform: scale(1.0) translateY(0);
+      }
+      70% {
+        opacity: 0.6;
+        transform: scale(1.6) translateY(-15px);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(2.4) translateY(-50px);
+      }
     }
 
-    /* --- Слой 3: золотые искры (микро-частицы) --- */
+    /* --- ИСКРЫ (мелкие частицы) --- */
     .splash__sparkle {
       position: absolute;
       top: 0;
@@ -214,85 +228,123 @@
       width: 3px;
       height: 3px;
       border-radius: 50%;
-      background: rgba(210, 190, 170, 0.6);
+      background: rgba(210, 190, 170, 0.5);
       opacity: 0;
-      animation: sparkleFade 2.8s ease-in-out infinite;
-      will-change: transform, opacity;
+      animation: sparkleFade 3.0s ease-in-out infinite;
     }
 
-    .splash__sparkle i:nth-child(1) { top: 20%; left: 15%; animation-delay: 0.2s; width: 4px; height: 4px; }
-    .splash__sparkle i:nth-child(2) { top: 35%; left: 75%; animation-delay: 0.8s; }
-    .splash__sparkle i:nth-child(3) { top: 60%; left: 25%; animation-delay: 1.4s; width: 4px; height: 4px; }
-    .splash__sparkle i:nth-child(4) { top: 15%; left: 50%; animation-delay: 0.5s; }
-    .splash__sparkle i:nth-child(5) { top: 70%; left: 70%; animation-delay: 1.1s; width: 5px; height: 5px; }
-    .splash__sparkle i:nth-child(6) { top: 45%; left: 10%; animation-delay: 0.9s; }
-    .splash__sparkle i:nth-child(7) { top: 80%; left: 40%; animation-delay: 1.7s; width: 4px; height: 4px; }
-    .splash__sparkle i:nth-child(8) { top: 10%; left: 85%; animation-delay: 0.3s; }
+    .splash__sparkle i:nth-child(1) {
+      top: 15%;
+      left: 10%;
+      animation-delay: 0.1s;
+      width: 4px;
+      height: 4px;
+    }
+    .splash__sparkle i:nth-child(2) {
+      top: 30%;
+      left: 80%;
+      animation-delay: 0.7s;
+    }
+    .splash__sparkle i:nth-child(3) {
+      top: 65%;
+      left: 20%;
+      animation-delay: 1.3s;
+      width: 4px;
+      height: 4px;
+    }
+    .splash__sparkle i:nth-child(4) {
+      top: 10%;
+      left: 50%;
+      animation-delay: 0.4s;
+    }
+    .splash__sparkle i:nth-child(5) {
+      top: 75%;
+      left: 75%;
+      animation-delay: 1.0s;
+      width: 5px;
+      height: 5px;
+    }
+    .splash__sparkle i:nth-child(6) {
+      top: 45%;
+      left: 5%;
+      animation-delay: 0.8s;
+    }
+    .splash__sparkle i:nth-child(7) {
+      top: 85%;
+      left: 40%;
+      animation-delay: 1.6s;
+      width: 4px;
+      height: 4px;
+    }
+    .splash__sparkle i:nth-child(8) {
+      top: 8%;
+      left: 88%;
+      animation-delay: 0.2s;
+    }
+    .splash__sparkle i:nth-child(9) {
+      top: 55%;
+      left: 55%;
+      animation-delay: 0.9s;
+      width: 5px;
+      height: 5px;
+    }
+    .splash__sparkle i:nth-child(10) {
+      top: 22%;
+      left: 35%;
+      animation-delay: 1.1s;
+    }
 
     @keyframes sparkleFade {
-      0%, 100% { opacity: 0; transform: scale(0.3); }
-      50% { opacity: 1; transform: scale(1.2); }
+      0%,
+      100% {
+        opacity: 0;
+        transform: scale(0.3);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.3);
+      }
     }
 
-    /* --- ТЕКСТ ЗАСТАВКИ (GUSTO) --- */
+    /* --- ТЕКСТ GUSTO --- */
     .splash__title {
       font-size: clamp(56px, 13vw, 130px);
       font-weight: 200;
-      letter-spacing: 22px;
+      letter-spacing: 24px;
       color: #f5f0eb;
       text-transform: uppercase;
       z-index: 2;
-      transition: all 1.4s cubic-bezier(0.77, 0, 0.18, 1);
+      transition: all 1.4s var(--ease);
       text-align: center;
-      text-shadow: 0 0 60px rgba(200, 180, 160, 0.08);
-      will-change: transform, font-size, letter-spacing;
-      animation: titleGlow 4s ease-in-out infinite alternate;
+      text-shadow: 0 0 80px rgba(200, 180, 160, 0.06);
+      animation: titleGlow 5s ease-in-out infinite alternate;
     }
 
     @keyframes titleGlow {
-      0%   { text-shadow: 0 0 40px rgba(200, 180, 160, 0.05); }
-      100% { text-shadow: 0 0 80px rgba(200, 180, 160, 0.12); }
+      0% {
+        text-shadow: 0 0 40px rgba(200, 180, 160, 0.04);
+      }
+      100% {
+        text-shadow: 0 0 100px rgba(200, 180, 160, 0.12);
+      }
     }
 
-    .splash__sub {
-      font-size: clamp(14px, 1.4vw, 20px);
-      color: #a89f97;
-      letter-spacing: 6px;
-      font-weight: 300;
-      margin-top: 10px;
-      z-index: 2;
-      transition: all 0.8s ease;
-      opacity: 0;
-      animation: subFadeIn 1.4s ease 0.4s forwards;
-    }
-
-    @keyframes subFadeIn {
-      0%   { opacity: 0; transform: translateY(12px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-
-    /* --- Состояние "сжато" --- */
+    /* --- СОСТОЯНИЕ "СЖАТО" --- */
     .splash.shrink {
-      height: 85px;
-      min-height: 85px;
+      height: 80px;
+      min-height: 80px;
       position: relative;
       z-index: 10;
       background: var(--bg-dark);
-      border-radius: 0 0 44px 44px;
-      box-shadow: 0 4px 40px rgba(0, 0, 0, 0.18);
+      border-radius: 0 0 48px 48px;
+      box-shadow: 0 4px 40px rgba(0, 0, 0, 0.20);
     }
 
     .splash.shrink .splash__title {
-      font-size: clamp(26px, 3.8vw, 42px);
-      letter-spacing: 12px;
+      font-size: clamp(24px, 3.6vw, 40px);
+      letter-spacing: 14px;
       animation: none;
       text-shadow: none;
-    }
-
-    .splash.shrink .splash__sub {
-      opacity: 0;
-      transform: translateY(-12px);
-      pointer-events: none;
     }
 
     .splash.shrink .splash__mist,
@@ -302,13 +354,13 @@
       transition: opacity 0.8s ease;
     }
 
-    /* ===================================================================
-       3. ОСНОВНОЙ КОНТЕНТ — ЭФФЕКТ "ПОРТЬЕРЫ"
-    =================================================================== */
+    /* ==============================================================
+       2. ОСНОВНОЙ КОНТЕНТ
+    ============================================================== */
     .main {
       opacity: 0;
       transition: opacity 1.2s ease 0.8s;
-      margin-top: 20px;
+      margin-top: 16px;
       position: relative;
     }
 
@@ -319,7 +371,7 @@
       left: 0;
       width: 100%;
       height: 60px;
-      background: linear-gradient(to bottom, transparent 0%, var(--bg-primary) 100%);
+      background: linear-gradient(to bottom, transparent 0%, var(--bg) 100%);
       pointer-events: none;
       z-index: 5;
     }
@@ -328,12 +380,12 @@
       opacity: 1;
     }
 
-    /* ===================================================================
-       4. ПОИСК
-    =================================================================== */
+    /* ==============================================================
+       3. ПОИСК
+    ============================================================== */
     .search {
       max-width: 480px;
-      margin: 20px auto 16px;
+      margin: 18px auto 12px;
       position: relative;
       z-index: 2;
     }
@@ -343,22 +395,22 @@
       padding: 16px 28px;
       border-radius: 60px;
       border: 1px solid #ddd6ce;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(8px);
+      background: rgba(255, 255, 255, 0.80);
+      backdrop-filter: blur(10px);
       font-size: 16px;
       font-weight: 400;
-      color: var(--text-dark);
+      color: var(--text);
       outline: none;
-      transition: var(--transition);
+      transition: all 0.5s var(--ease);
       font-family: inherit;
-      box-shadow: 0 2px 16px rgba(0, 0, 0, 0.02);
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.02);
       text-align: center;
     }
 
     .search__input:focus {
-      border-color: var(--text-dark);
-      background: #ffffff;
-      box-shadow: 0 4px 32px rgba(0, 0, 0, 0.06);
+      border-color: var(--text);
+      background: var(--white);
+      box-shadow: 0 4px 40px rgba(0, 0, 0, 0.06);
       transform: scale(1.01);
     }
 
@@ -371,66 +423,59 @@
       text-align: center;
       font-size: 14px;
       color: var(--text-light);
-      margin-top: 8px;
+      margin-top: 6px;
       font-weight: 300;
       min-height: 24px;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.4s ease;
     }
 
-    /* ===================================================================
-       5. АРОМАТ ДНЯ
-    =================================================================== */
+    /* ==============================================================
+       4. АРОМАТ ДНЯ
+    ============================================================== */
     .daily {
       background: linear-gradient(145deg, var(--rose-light) 0%, var(--rose) 100%);
       border-radius: var(--radius);
-      padding: 30px 36px;
-      margin: 24px 0 44px;
+      padding: 28px 34px;
+      margin: 20px 0 40px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 18px;
+      gap: 16px;
       color: #2c2420;
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      box-shadow: 0 8px 48px rgba(180, 130, 110, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.30);
+      box-shadow: 0 8px 48px rgba(180, 130, 110, 0.08);
       position: relative;
       overflow: hidden;
-      transition: var(--transition);
       transform: translateY(20px);
       opacity: 0;
       animation: dailyIn 0.9s ease 1.0s forwards;
-      will-change: transform, opacity;
     }
 
     @keyframes dailyIn {
-      0%   { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .daily::before {
       content: '✦';
-      font-size: 200px;
+      font-size: 180px;
       position: absolute;
-      right: -30px;
-      bottom: -70px;
-      color: rgba(255, 255, 255, 0.07);
+      right: -20px;
+      bottom: -60px;
+      color: rgba(255, 255, 255, 0.06);
       transform: rotate(-6deg);
       pointer-events: none;
     }
 
-    .daily::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -20%;
-      width: 60%;
-      height: 200%;
-      background: radial-gradient(ellipse, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
     .daily__label {
-      font-size: 12px;
+      font-size: 11px;
       letter-spacing: 4px;
       text-transform: uppercase;
       color: #7a5f52;
@@ -441,11 +486,11 @@
     }
 
     .daily__label .icon {
-      font-size: 20px;
+      font-size: 18px;
     }
 
     .daily__name {
-      font-size: 34px;
+      font-size: 32px;
       font-weight: 500;
       letter-spacing: 0.5px;
       color: #2c2420;
@@ -462,46 +507,43 @@
       background: rgba(44, 36, 32, 0.92);
       border: none;
       color: #f5f0eb;
-      padding: 13px 34px;
+      padding: 12px 32px;
       border-radius: 60px;
       text-decoration: none;
       font-weight: 500;
       font-size: 15px;
-      transition: var(--transition);
+      transition: all 0.4s var(--ease);
       white-space: nowrap;
       backdrop-filter: blur(6px);
-      position: relative;
       z-index: 2;
-      will-change: transform;
+      position: relative;
     }
 
     .daily__btn:hover {
       background: #2c2420;
-      transform: scale(1.04);
-      box-shadow: 0 8px 32px rgba(44, 36, 32, 0.20);
+      transform: scale(1.05);
+      box-shadow: 0 8px 32px rgba(44, 36, 32, 0.18);
     }
 
-    /* ===================================================================
-       6. КАТАЛОГ
-    =================================================================== */
+    /* ==============================================================
+       5. КАТАЛОГ
+    ============================================================== */
     .catalog {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 34px 30px;
-      padding: 8px 0 44px;
+      gap: 36px 32px;
+      padding: 6px 0 44px;
     }
 
-    /* ===================================================================
-       7. КАРТОЧКА ТОВАРА
-    =================================================================== */
+    /* ==============================================================
+       6. КАРТОЧКА ТОВАРА
+    ============================================================== */
     .product {
-      background: var(--bg-card);
+      background: var(--white);
       border-radius: var(--radius);
       padding: 24px 24px 30px;
       box-shadow: var(--shadow);
-      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-                  box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-                  background 0.4s ease;
+      transition: all 0.6s var(--ease);
       display: flex;
       flex-direction: column;
       position: relative;
@@ -512,28 +554,41 @@
     }
 
     .product.animate {
-      animation: cardReveal 1.0s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation: cardIn 1.0s var(--ease) forwards;
     }
 
-    .product:nth-child(1) { animation-delay: 0.15s; }
-    .product:nth-child(2) { animation-delay: 0.45s; }
-    .product:nth-child(3) { animation-delay: 0.75s; }
+    .product:nth-child(1) {
+      animation-delay: 0.15s;
+    }
+    .product:nth-child(2) {
+      animation-delay: 0.45s;
+    }
+    .product:nth-child(3) {
+      animation-delay: 0.75s;
+    }
 
-    @keyframes cardReveal {
-      0%   { opacity: 0; transform: translateY(50px) scale(0.96); }
-      100% { opacity: 1; transform: translateY(0) scale(1); }
+    @keyframes cardIn {
+      0% {
+        opacity: 0;
+        transform: translateY(50px) scale(0.96);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     .product:hover {
-      transform: translateY(-10px) scale(1.005);
+      transform: translateY(-10px) scale(1.006);
       box-shadow: var(--shadow-hover);
       background: #fefcf9;
       border-color: #e8e0da;
     }
 
+    /* --- ФОТО --- */
     .product__image-wrap {
       position: relative;
-      border-radius: 20px;
+      border-radius: 22px;
       overflow: hidden;
       margin-bottom: 18px;
       background: #f5f0eb;
@@ -544,15 +599,13 @@
       aspect-ratio: 1 / 1;
       object-fit: contain;
       background: #f5f0eb;
-      transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-      will-change: transform;
+      transition: transform 0.8s var(--ease);
     }
 
     .product:hover .product__image {
-      transform: scale(1.03);
+      transform: scale(1.04);
     }
 
-    /* --- Эффект свечения при наведении --- */
     .product__image-wrap::after {
       content: '';
       position: absolute;
@@ -560,7 +613,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, rgba(200, 180, 160, 0.03) 0%, transparent 60%);
+      background: linear-gradient(135deg, rgba(200, 180, 160, 0.04) 0%, transparent 60%);
       pointer-events: none;
       opacity: 0;
       transition: opacity 0.6s ease;
@@ -570,10 +623,11 @@
       opacity: 1;
     }
 
+    /* --- ТЕКСТ --- */
     .product__brand {
-      font-size: 11px;
+      font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 1.6px;
+      letter-spacing: 1.8px;
       color: var(--text-light);
       margin-bottom: 2px;
       font-weight: 500;
@@ -582,7 +636,7 @@
     .product__name {
       font-size: 22px;
       font-weight: 500;
-      color: var(--text-dark);
+      color: var(--text);
       margin-bottom: 2px;
       transition: color 0.3s ease;
     }
@@ -599,7 +653,7 @@
       font-weight: 400;
     }
 
-    /* --- Шлейф аромата (анимированный) --- */
+    /* --- ШЛЕЙФ --- */
     .product__trail {
       height: 2px;
       width: 56px;
@@ -608,7 +662,7 @@
       background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
       position: relative;
       overflow: hidden;
-      transition: width 0.6s ease;
+      transition: width 0.6s var(--ease);
     }
 
     .product__trail::after {
@@ -618,20 +672,24 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
       animation: trailShine 3s ease-in-out infinite;
     }
 
     @keyframes trailShine {
-      0%   { left: -100%; }
-      100% { left: 200%; }
+      0% {
+        left: -100%;
+      }
+      100% {
+        left: 200%;
+      }
     }
 
     .product:hover .product__trail {
-      width: 80px;
+      width: 90px;
     }
 
-    /* --- Цены --- */
+    /* --- ЦЕНЫ --- */
     .product__prices {
       display: flex;
       flex-wrap: wrap;
@@ -646,14 +704,13 @@
       border-radius: 30px;
       font-weight: 500;
       font-size: 14px;
-      color: var(--text-dark);
-      transition: background 0.3s ease, transform 0.2s ease;
-      will-change: transform;
+      color: var(--text);
+      transition: all 0.3s var(--ease);
     }
 
     .product__prices span:hover {
       background: #ece4dc;
-      transform: scale(1.04);
+      transform: scale(1.05);
     }
 
     .product__prices span small {
@@ -662,23 +719,22 @@
       margin-right: 2px;
     }
 
-    /* --- Бейдж "Хит" --- */
+    /* --- БЕЙДЖ --- */
     .product__badge {
       position: absolute;
       top: 20px;
       right: 20px;
       background: #c0392b;
       color: #fff;
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 600;
       padding: 4px 18px;
       border-radius: 40px;
-      letter-spacing: 0.8px;
+      letter-spacing: 1px;
       text-transform: uppercase;
       box-shadow: 0 2px 20px rgba(192, 57, 43, 0.25);
       z-index: 3;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      will-change: transform;
+      transition: all 0.3s var(--ease);
     }
 
     .product:hover .product__badge {
@@ -686,7 +742,7 @@
       box-shadow: 0 4px 28px rgba(192, 57, 43, 0.30);
     }
 
-    /* --- Кнопка "Избранное" --- */
+    /* --- ИЗБРАННОЕ --- */
     .product__favorite {
       position: absolute;
       top: 20px;
@@ -699,30 +755,29 @@
       height: 42px;
       font-size: 18px;
       cursor: pointer;
-      transition: var(--transition);
+      transition: all 0.3s var(--ease);
       box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--text-light);
       z-index: 3;
-      will-change: transform;
     }
 
     .product__favorite:hover {
       transform: scale(1.10);
-      background: #ffffff;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      background: var(--white);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
     }
 
     .product__favorite.active {
       color: #c0392b;
     }
 
-    /* --- Кнопка Telegram --- */
+    /* --- КНОПКА --- */
     .product__btn {
       display: inline-block;
-      background: var(--text-dark);
+      background: var(--text);
       color: #fff;
       text-align: center;
       padding: 15px 0;
@@ -730,20 +785,19 @@
       text-decoration: none;
       font-weight: 500;
       font-size: 16px;
-      transition: background 0.3s ease, transform 0.25s ease, box-shadow 0.3s ease;
+      transition: all 0.4s var(--ease);
       margin-top: auto;
       width: 100%;
       letter-spacing: 0.3px;
-      will-change: transform;
     }
 
     .product__btn:hover {
       background: #3a3a3c;
       transform: scale(1.015);
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
+      box-shadow: 0 4px 28px rgba(0, 0, 0, 0.10);
     }
 
-    /* --- Памятка --- */
+    /* --- ПАМЯТКА --- */
     .product__reminder {
       background: #f5f0eb;
       border-radius: 18px;
@@ -753,7 +807,7 @@
       color: #3d3a37;
       line-height: 1.7;
       border: 1px solid #e8e0da;
-      transition: background 0.3s ease, border-color 0.3s ease;
+      transition: all 0.3s var(--ease);
     }
 
     .product:hover .product__reminder {
@@ -766,7 +820,7 @@
       font-size: 13px;
       font-weight: 600;
       margin-bottom: 2px;
-      color: var(--text-dark);
+      color: var(--text);
     }
 
     .product__reminder ol {
@@ -780,14 +834,14 @@
       font-size: 12px;
     }
 
-    /* --- Скрытые товары при поиске --- */
+    /* --- СКРЫТО --- */
     .product.hidden {
       display: none;
     }
 
-    /* ===================================================================
-       8. ПОДВАЛ
-    =================================================================== */
+    /* ==============================================================
+       7. ПОДВАЛ
+    ============================================================== */
     .footer {
       text-align: center;
       font-size: 13px;
@@ -797,22 +851,26 @@
       margin-top: 8px;
       font-weight: 300;
       letter-spacing: 0.6px;
-      transition: opacity 0.6s ease;
     }
 
     .footer span {
       display: inline-block;
-      animation: footerPulse 3s ease-in-out infinite;
+      animation: footerPulse 4s ease-in-out infinite;
     }
 
     @keyframes footerPulse {
-      0%, 100% { opacity: 0.7; }
-      50% { opacity: 1; }
+      0%,
+      100% {
+        opacity: 0.6;
+      }
+      50% {
+        opacity: 1;
+      }
     }
 
-    /* ===================================================================
-       9. АДАПТИВНОСТЬ
-    =================================================================== */
+    /* ==============================================================
+       8. АДАПТИВНОСТЬ
+    ============================================================== */
     @media (max-width: 820px) {
       .catalog {
         grid-template-columns: 1fr 1fr;
@@ -820,7 +878,7 @@
       }
       .product {
         padding: 16px 16px 22px;
-        border-radius: 22px;
+        border-radius: 24px;
       }
       .product__name {
         font-size: 18px;
@@ -844,7 +902,7 @@
       .product__badge {
         top: 14px;
         right: 14px;
-        font-size: 9px;
+        font-size: 8px;
         padding: 3px 14px;
       }
       .product__favorite {
@@ -856,26 +914,26 @@
       }
 
       .daily {
-        padding: 22px 24px;
-        border-radius: 22px;
-        margin: 20px 0 32px;
+        padding: 20px 24px;
+        border-radius: 24px;
+        margin: 18px 0 32px;
       }
       .daily__name {
         font-size: 24px;
       }
       .daily__btn {
         font-size: 13px;
-        padding: 11px 22px;
+        padding: 10px 22px;
       }
       .daily::before {
-        font-size: 140px;
+        font-size: 130px;
         right: -10px;
         bottom: -40px;
       }
 
       .splash.shrink {
-        height: 70px;
-        min-height: 70px;
+        height: 68px;
+        min-height: 68px;
         border-radius: 0 0 32px 32px;
       }
       .splash.shrink .splash__title {
@@ -897,16 +955,12 @@
         min-height: 200px;
       }
       .splash__title {
-        font-size: 44px;
+        font-size: 40px;
         letter-spacing: 10px;
       }
       .splash.shrink .splash__title {
         font-size: 18px;
         letter-spacing: 5px;
-      }
-      .splash__sub {
-        font-size: 12px;
-        letter-spacing: 4px;
       }
 
       .product__name {
@@ -922,14 +976,14 @@
       }
       .daily__btn {
         font-size: 12px;
-        padding: 10px 18px;
+        padding: 9px 18px;
       }
       .daily {
-        padding: 18px 20px;
-        border-radius: 18px;
+        padding: 16px 18px;
+        border-radius: 20px;
       }
       .daily::before {
-        font-size: 100px;
+        font-size: 90px;
         right: -5px;
         bottom: -30px;
       }
@@ -953,342 +1007,296 @@
       }
     }
 
-    /* ===================================================================
-       10. ДОПОЛНИТЕЛЬНЫЕ ЭФФЕКТЫ
-    =================================================================== */
-
-    /* --- Плавное появление контента при скролле (для будущих секций) --- */
-    .fade-section {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-
-    .fade-section.visible-section {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* --- Стиль для выделения текста --- */
+    /* ==============================================================
+       9. ДОПОЛНИТЕЛЬНО
+    ============================================================== */
     ::selection {
-      background: rgba(200, 180, 160, 0.3);
-      color: var(--text-dark);
+      background: rgba(200, 180, 160, 0.25);
+      color: var(--text);
     }
 
-    /* --- Микро-анимация для иконок --- */
     .icon-float {
       display: inline-block;
-      animation: floatIcon 3s ease-in-out infinite;
+      animation: floatIcon 3.5s ease-in-out infinite;
     }
 
     @keyframes floatIcon {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-4px); }
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-5px);
+      }
     }
   </style>
 </head>
 <body>
 
-<!-- ================================================================
-     ЗАСТАВКА (SPLASH)
-================================================================ -->
-<div class="splash" id="splash">
-  <!-- Слой 1: туман -->
-  <div class="splash__mist"></div>
+  <!-- =============================================================
+       ЗАСТАВКА
+  ============================================================= -->
+  <div class="splash" id="splash">
+    <div class="splash__mist"></div>
 
-  <!-- Слой 2: распыление (частицы) -->
-  <div class="splash__spray">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-
-  <!-- Слой 3: искры -->
-  <div class="splash__sparkle">
-    <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-  </div>
-
-  <!-- Текст -->
-  <div class="splash__title">Gusto</div>
-  <div class="splash__sub">нишевая парфюмерия</div>
-</div>
-
-<!-- ================================================================
-     ОСНОВНОЙ КОНТЕНТ
-================================================================ -->
-<div class="main" id="main">
-
-  <div class="container">
-
-    <!-- ПОИСК -->
-    <div class="search">
-      <input class="search__input" type="text" id="searchInput" placeholder="Искать аромат или бренд…" autocomplete="off" />
-      <div class="search__result" id="resultCount"></div>
+    <div class="splash__spray">
+      <span></span><span></span><span></span><span></span><span></span>
     </div>
 
-    <!-- АРОМАТ ДНЯ -->
-    <div class="daily" id="dailyBanner">
-      <div>
-        <div class="daily__label">
-          <span class="icon icon-float">✦</span> Аромат дня
-        </div>
-        <div class="daily__name" id="dailyName">Загрузка…</div>
-        <div class="daily__brand" id="dailyBrand"></div>
-      </div>
-      <a href="#" class="daily__btn" id="dailyLink">
-        <span style="font-weight:300;margin-right:6px;">📱</span> Заказать
-      </a>
+    <div class="splash__sparkle">
+      <i></i><i></i><i></i><i></i><i></i>
+      <i></i><i></i><i></i><i></i><i></i>
     </div>
 
-    <!-- КАТАЛОГ -->
-    <section class="catalog" id="catalog">
-
-      <!-- ===== ТОВАР 1 ===== -->
-      <div class="product animate" data-name="Tuscan Leather" data-brand="Tom Ford">
-        <span class="product__badge">Хит</span>
-        <button class="product__favorite" data-product="Tuscan Leather" aria-label="Добавить в избранное">♡</button>
-        <div class="product__image-wrap">
-          <img class="product__image" src="https://avatars.mds.yandex.net/i?id=89bba4f3b94aa9e27f3afc1fbbb5b6feb2f121ba-10415032-images-thumbs&n=13" alt="Tom Ford Tuscan Leather" loading="lazy" />
-        </div>
-        <div class="product__brand">Tom Ford</div>
-        <div class="product__name">Tuscan Leather</div>
-        <div class="product__desc">Кожа, малина и шафран. Смелый, дымный, чувственный.</div>
-        <div class="product__trail"></div>
-        <div class="product__prices">
-          <span><small>30 мл</small> 10 900 ₽</span>
-          <span><small>50 мл</small> 16 500 ₽</span>
-          <span><small>100 мл</small> 25 900 ₽</span>
-        </div>
-        <a href="https://t.me/Kat_offic" target="_blank" class="product__btn">📱 Заказать в Telegram</a>
-        <div class="product__reminder">
-          <strong>📸 Памятка</strong>
-          <ol>
-            <li>Нажмите кнопку выше</li>
-            <li>Сделайте скриншот карточки</li>
-            <li>Отправьте в Telegram</li>
-            <li>Укажите объём</li>
-          </ol>
-          <div class="fast">⏱ Ответ в 5 минут</div>
-        </div>
-      </div>
-
-      <!-- ===== ТОВАР 2 ===== -->
-      <div class="product animate" data-name="Lost Cherry" data-brand="Tom Ford">
-        <span class="product__badge">Хит</span>
-        <button class="product__favorite" data-product="Lost Cherry" aria-label="Добавить в избранное">♡</button>
-        <div class="product__image-wrap">
-          <img class="product__image" src="https://avatars.mds.yandex.net/i?id=a543836f153a9476b3d3fb1e35cd86db99d8bc99-5091797-images-thumbs&n=13" alt="Tom Ford Lost Cherry" loading="lazy" />
-        </div>
-        <div class="product__brand">Tom Ford</div>
-        <div class="product__name">Lost Cherry</div>
-        <div class="product__desc">Черная вишня, миндаль и жасмин. Сладкий, опьяняющий, запретный.</div>
-        <div class="product__trail"></div>
-        <div class="product__prices">
-          <span><small>30 мл</small> 18 500 ₽</span>
-          <span><small>50 мл</small> 27 500 ₽</span>
-          <span><small>100 мл</small> 41 500 ₽</span>
-        </div>
-        <a href="https://t.me/Kat_offic" target="_blank" class="product__btn">📱 Заказать в Telegram</a>
-        <div class="product__reminder">
-          <strong>📸 Памятка</strong>
-          <ol>
-            <li>Нажмите кнопку выше</li>
-            <li>Сделайте скриншот карточки</li>
-            <li>Отправьте в Telegram</li>
-            <li>Укажите объём</li>
-          </ol>
-          <div class="fast">⏱ Ответ в 5 минут</div>
-        </div>
-      </div>
-
-      <!-- ===== ТОВАР 3 ===== -->
-      <div class="product animate" data-name="Fougere D'Argent" data-brand="Tom Ford">
-        <button class="product__favorite" data-product="Fougere D'Argent" aria-label="Добавить в избранное">♡</button>
-        <div class="product__image-wrap">
-          <img class="product__image" src="https://avatars.mds.yandex.net/i?id=52d3c77ca6edca8d8d1b5d68f4b39a38ed4d7123-11509297-images-thumbs&n=13" alt="Tom Ford Fougere D'Argent" loading="lazy" />
-        </div>
-        <div class="product__brand">Tom Ford</div>
-        <div class="product__name">Fougere D'Argent</div>
-        <div class="product__desc">Лаванда, имбирь и дуб. Аристократичный, свежий, бархатный.</div>
-        <div class="product__trail"></div>
-        <div class="product__prices">
-          <span><small>30 мл</small> 12 900 ₽</span>
-          <span><small>50 мл</small> 18 900 ₽</span>
-          <span><small>100 мл</small> 28 500 ₽</span>
-        </div>
-        <a href="https://t.me/Kat_offic" target="_blank" class="product__btn">📱 Заказать в Telegram</a>
-        <div class="product__reminder">
-          <strong>📸 Памятка</strong>
-          <ol>
-            <li>Нажмите кнопку выше</li>
-            <li>Сделайте скриншот карточки</li>
-            <li>Отправьте в Telegram</li>
-            <li>Укажите объём</li>
-          </ol>
-          <div class="fast">⏱ Ответ в 5 минут</div>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- ПОДВАЛ -->
-    <footer class="footer">
-      <span>© 2026 Gusto. Все ароматы оригинальны.</span>
-    </footer>
-
+    <div class="splash__title">Gusto</div>
   </div>
-</div>
 
-<!-- ================================================================
-     СКРИПТЫ
-================================================================ -->
-<script>
-  (function() {
-    'use strict';
+  <!-- =============================================================
+       ОСНОВНОЙ КОНТЕНТ
+  ============================================================= -->
+  <div class="main" id="main">
 
-    // --- 1. АНИМАЦИЯ ЗАСТАВКИ ---
-    const splash = document.getElementById('splash');
-    const main = document.getElementById('main');
+    <div class="container">
 
-    setTimeout(() => splash.classList.add('shrink'), 700);
-    setTimeout(() => main.classList.add('visible'), 1300);
+      <!-- ПОИСК -->
+      <div class="search">
+        <input class="search__input" type="text" id="searchInput" placeholder="Искать аромат или бренд…" autocomplete="off" />
+        <div class="search__result" id="resultCount"></div>
+      </div>
 
-    // --- 2. ДАННЫЕ ДЛЯ АРОМАТА ДНЯ ---
-    const products = [
-      { name: 'Tuscan Leather', brand: 'Tom Ford', link: 'https://t.me/Kat_offic' },
-      { name: 'Lost Cherry', brand: 'Tom Ford', link: 'https://t.me/Kat_offic' },
-      { name: 'Fougere D\'Argent', brand: 'Tom Ford', link: 'https://t.me/Kat_offic' }
-    ];
+      <!-- АРОМАТ ДНЯ -->
+      <div class="daily" id="dailyBanner">
+        <div>
+          <div class="daily__label">
+            <span class="icon icon-float">✦</span> Аромат дня
+          </div>
+          <div class="daily__name" id="dailyName">Загрузка…</div>
+          <div class="daily__brand" id="dailyBrand"></div>
+        </div>
+        <a href="#" class="daily__btn" id="dailyLink">
+          <span style="font-weight:300;margin-right:6px;">📱</span> Заказать
+        </a>
+      </div>
 
-    function getDaily() {
-      const today = new Date().toDateString();
-      let saved = null;
-      try {
-        const raw = localStorage.getItem('gusto_daily');
-        if (raw) {
-          const parsed = JSON.parse(raw);
-          if (parsed.date === today) return parsed.product;
-        }
-      } catch (_) {}
+      <!-- КАТАЛОГ -->
+      <section class="catalog" id="catalog">
 
-      const random = products[Math.floor(Math.random() * products.length)];
-      try {
-        localStorage.setItem('gusto_daily', JSON.stringify({ date: today, product: random }));
-      } catch (_) {}
-      return random;
-    }
+        <!-- Товар 1 -->
+        <div class="product animate" data-name="Tuscan Leather" data-brand="Tom Ford">
+          <span class="product__badge">Хит</span>
+          <button class="product__favorite" data-product="Tuscan Leather" aria-label="В избранное">♡</button>
+          <div class="product__image-wrap">
+            <img class="product__image" src="https://avatars.mds.yandex.net/i?id=89bba4f3b94aa9e27f3afc1fbbb5b6feb2f121ba-10415032-images-thumbs&n=13" alt="Tuscan Leather" loading="lazy" />
+          </div>
+          <div class="product__brand">Tom Ford</div>
+          <div class="product__name">Tuscan Leather</div>
+          <div class="product__desc">Кожа, малина и шафран. Смелый, дымный, чувственный.</div>
+          <div class="product__trail"></div>
+          <div class="product__prices">
+            <span><small>30 мл</small> 10 900 ₽</span>
+            <span><small>50 мл</small> 16 500 ₽</span>
+            <span><small>100 мл</small> 25 900 ₽</span>
+          </div>
+          <a href="https://t.me/Kat_offic" target="_blank" class="product__btn">📱 Заказать в Telegram</a>
+          <div class="product__reminder">
+            <strong>📸 Памятка</strong>
+            <ol>
+              <li>Нажмите кнопку выше</li>
+              <li>Сделайте скриншот карточки</li>
+              <li>Отправьте в Telegram</li>
+              <li>Укажите объём</li>
+            </ol>
+            <div class="fast">⏱ Ответ в 5 минут</div>
+          </div>
+        </div>
 
-    const daily = getDaily();
-    document.getElementById('dailyName').textContent = daily.name;
-    document.getElementById('dailyBrand').textContent = daily.brand;
-    document.getElementById('dailyLink').href = daily.link;
+        <!-- Товар 2 -->
+        <div class="product animate" data-name="Lost Cherry" data-brand="Tom Ford">
+          <span class="product__badge">Хит</span>
+          <button class="product__favorite" data-product="Lost Cherry" aria-label="В избранное">♡</button>
+          <div class="product__image-wrap">
+            <img class="product__image" src="https://avatars.mds.yandex.net/i?id=a543836f153a9476b3d3fb1e35cd86db99d8bc99-5091797-images-thumbs&n=13" alt="Lost Cherry" loading="lazy" />
+          </div>
+          <div class="product__brand">Tom Ford</div>
+          <div class="product__name">Lost Cherry</div>
+          <div class="product__desc">Черная вишня, миндаль и жасмин. Сладкий, опьяняющий.</div>
+          <div class="product__trail"></div>
+          <div class="product__prices">
+            <span><small>30 мл</small> 18 500 ₽</span>
+            <span><small>50 мл</small> 27 500 ₽</span>
+            <span><small>100 мл</small> 41 500 ₽</span>
+          </div>
+          <a href="https://t.me/Kat_offic" target="_blank" class="product__btn">📱 Заказать в Telegram</a>
+          <div class="product__reminder">
+            <strong>📸 Памятка</strong>
+            <ol>
+              <li>Нажмите кнопку выше</li>
+              <li>Сделайте скриншот карточки</li>
+              <li>Отправьте в Telegram</li>
+              <li>Укажите объём</li>
+            </ol>
+            <div class="fast">⏱ Ответ в 5 минут</div>
+          </div>
+        </div>
 
-    // --- 3. ПОИСК ---
-    const searchInput = document.getElementById('searchInput');
-    const catalog = document.getElementById('catalog');
-    const allProducts = catalog.querySelectorAll('.product');
-    const resultCount = document.getElementById('resultCount');
+        <!-- Товар 3 -->
+        <div class="product animate" data-name="Fougere D'Argent" data-brand="Tom Ford">
+          <button class="product__favorite" data-product="Fougere D'Argent" aria-label="В избранное">♡</button>
+          <div class="product__image-wrap">
+            <img class="product__image" src="https://avatars.mds.yandex.net/i?id=52d3c77ca6edca8d8d1b5d68f4b39a38ed4d7123-11509297-images-thumbs&n=13" alt="Fougere D'Argent" loading="lazy" />
+          </div>
+          <div class="product__brand">Tom Ford</div>
+          <div class="product__name">Fougere D'Argent</div>
+          <div class="product__desc">Лаванда, имбирь и дуб. Аристократичный, свежий, бархатный.</div>
+          <div class="product__trail"></div>
+          <div class="product__prices">
+            <span><small>30 мл</small> 12 900 ₽</span>
+            <span><small>50 мл</small> 18 900 ₽</span>
+            <span><small>100 мл</small> 28 500 ₽</span>
+          </div>
+          <a href="https://t.me/Kat_offic" target="_blank" class="product__btn">📱 Заказать в Telegram</a>
+          <div class="product__reminder">
+            <strong>📸 Памятка</strong>
+            <ol>
+              <li>Нажмите кнопку выше</li>
+              <li>Сделайте скриншот карточки</li>
+              <li>Отправьте в Telegram</li>
+              <li>Укажите объём</li>
+            </ol>
+            <div class="fast">⏱ Ответ в 5 минут</div>
+          </div>
+        </div>
 
-    function filterProducts(query) {
-      const q = query.toLowerCase().trim();
-      let visible = 0;
+      </section>
 
-      allProducts.forEach(product => {
-        const name = (product.dataset.name || '').toLowerCase();
-        const brand = (product.dataset.brand || '').toLowerCase();
-        const match = name.includes(q) || brand.includes(q);
-        product.classList.toggle('hidden', !match);
-        if (match) visible++;
-      });
+      <!-- ПОДВАЛ -->
+      <footer class="footer">
+        <span>© 2026 Gusto</span>
+      </footer>
 
-      if (q === '') {
-        resultCount.textContent = '';
-      } else {
-        const word = visible === 1 ? '' : 'ов';
-        resultCount.textContent = `Найдено ${visible} аромат${word}`;
+    </div>
+  </div>
+
+  <!-- =============================================================
+       СКРИПТЫ
+  ============================================================= -->
+  <script>
+    (function() {
+      'use strict';
+
+      // --- ЗАСТАВКА ---
+      const splash = document.getElementById('splash');
+      const main = document.getElementById('main');
+
+      setTimeout(() => splash.classList.add('shrink'), 700);
+      setTimeout(() => main.classList.add('visible'), 1300);
+
+      // --- АРОМАТ ДНЯ ---
+      const perfumes = [
+        { name: 'Tuscan Leather', brand: 'Tom Ford', link: 'https://t.me/Kat_offic' },
+        { name: 'Lost Cherry', brand: 'Tom Ford', link: 'https://t.me/Kat_offic' },
+        { name: 'Fougere D\'Argent', brand: 'Tom Ford', link: 'https://t.me/Kat_offic' }
+      ];
+
+      function getDaily() {
+        const today = new Date().toDateString();
+        let saved = null;
+        try {
+          const raw = localStorage.getItem('gusto_daily');
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (parsed.date === today) return parsed.product;
+          }
+        } catch (_) {}
+
+        const random = perfumes[Math.floor(Math.random() * perfumes.length)];
+        try {
+          localStorage.setItem('gusto_daily', JSON.stringify({ date: today, product: random }));
+        } catch (_) {}
+        return random;
       }
-    }
 
-    searchInput.addEventListener('input', function() {
-      filterProducts(this.value);
-    });
+      const daily = getDaily();
+      document.getElementById('dailyName').textContent = daily.name;
+      document.getElementById('dailyBrand').textContent = daily.brand;
+      document.getElementById('dailyLink').href = daily.link;
 
-    // --- 4. ИЗБРАННОЕ (localStorage) ---
-    const favBtns = document.querySelectorAll('.product__favorite');
+      // --- ПОИСК ---
+      const searchInput = document.getElementById('searchInput');
+      const catalog = document.getElementById('catalog');
+      const allProducts = catalog.querySelectorAll('.product');
+      const resultCount = document.getElementById('resultCount');
 
-    function loadFavorites() {
-      try {
-        const favs = JSON.parse(localStorage.getItem('gusto_favorites') || '[]');
-        favBtns.forEach(btn => {
-          const name = btn.dataset.product;
-          if (favs.includes(name)) {
-            btn.classList.add('active');
-            btn.textContent = '♥';
+      function filterProducts(query) {
+        const q = query.toLowerCase().trim();
+        let visible = 0;
+
+        allProducts.forEach(product => {
+          const name = (product.dataset.name || '').toLowerCase();
+          const brand = (product.dataset.brand || '').toLowerCase();
+          const match = name.includes(q) || brand.includes(q);
+          product.classList.toggle('hidden', !match);
+          if (match) visible++;
+        });
+
+        resultCount.textContent = q === '' ? '' : `Найдено ${visible} аромат${visible === 1 ? '' : 'ов'}`;
+      }
+
+      searchInput.addEventListener('input', function() {
+        filterProducts(this.value);
+      });
+
+      // --- ИЗБРАННОЕ ---
+      const favBtns = document.querySelectorAll('.product__favorite');
+
+      function loadFavorites() {
+        try {
+          const favs = JSON.parse(localStorage.getItem('gusto_favorites') || '[]');
+          favBtns.forEach(btn => {
+            const name = btn.dataset.product;
+            if (favs.includes(name)) {
+              btn.classList.add('active');
+              btn.textContent = '♥';
+            } else {
+              btn.classList.remove('active');
+              btn.textContent = '♡';
+            }
+          });
+        } catch (_) {}
+      }
+
+      favBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const name = this.dataset.product;
+          let favs = [];
+          try {
+            favs = JSON.parse(localStorage.getItem('gusto_favorites') || '[]');
+          } catch (_) {}
+
+          const index = favs.indexOf(name);
+          if (index > -1) {
+            favs.splice(index, 1);
+            this.classList.remove('active');
+            this.textContent = '♡';
           } else {
-            btn.classList.remove('active');
-            btn.textContent = '♡';
+            favs.push(name);
+            this.classList.add('active');
+            this.textContent = '♥';
           }
+
+          try {
+            localStorage.setItem('gusto_favorites', JSON.stringify(favs));
+          } catch (_) {}
         });
-      } catch (_) {}
-    }
-
-    favBtns.forEach(btn => {
-      btn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const name = this.dataset.product;
-        let favs = [];
-        try {
-          favs = JSON.parse(localStorage.getItem('gusto_favorites') || '[]');
-        } catch (_) {}
-
-        const index = favs.indexOf(name);
-        if (index > -1) {
-          favs.splice(index, 1);
-          this.classList.remove('active');
-          this.textContent = '♡';
-        } else {
-          favs.push(name);
-          this.classList.add('active');
-          this.textContent = '♥';
-        }
-
-        try {
-          localStorage.setItem('gusto_favorites', JSON.stringify(favs));
-        } catch (_) {}
       });
-    });
 
-    loadFavorites();
+      loadFavorites();
 
-    // --- 5. ДОПОЛНИТЕЛЬНО: микро-эффект при наведении на цены ---
-    const priceSpans = document.querySelectorAll('.product__prices span');
-    priceSpans.forEach(span => {
-      span.addEventListener('mouseenter', function() {
-        this.style.transition = 'transform 0.2s ease, background 0.3s ease';
-      });
-    });
+      console.log('✨ Gusto готов');
 
-    // --- 6. ДОПОЛНИТЕЛЬНО: анимация скролла для будущих секций ---
-    const sections = document.querySelectorAll('.fade-section');
-    if (sections.length > 0) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible-section');
-          }
-        });
-      }, { threshold: 0.15 });
-
-      sections.forEach(section => observer.observe(section));
-    }
-
-    console.log('✨ Gusto — сайт загружен!');
-    console.log('📸 Аромат дня:', daily.name);
-
-  })();
-</script>
+    })();
+  </script>
 
 </body>
 </html>
