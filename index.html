@@ -1,243 +1,385 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Название бренда — Парфюм</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gusto — Нишевая парфюмерия</title>
   <style>
+    /* ===== ОБЩИЕ СТИЛИ ===== */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
     body {
-      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      background: #faf8f6;
-      color: #1e1e1e;
-      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #fbfbfb;
+      color: #1c1c1e;
+      padding: 24px;
+      -webkit-font-smoothing: antialiased;
     }
+
     .container {
       max-width: 1200px;
       margin: 0 auto;
     }
+
+    /* ===== ШАПКА (стиль Apple) ===== */
     .header {
       text-align: center;
-      padding: 30px 0 20px;
-      border-bottom: 1px solid #e6e1db;
+      padding: 40px 0 24px;
+      border-bottom: 1px solid #e8e8ed;
+      margin-bottom: 40px;
     }
+
     .header h1 {
-      font-size: 28px;
-      font-weight: 400;
-      letter-spacing: 2px;
+      font-size: 44px;
+      font-weight: 300;
+      letter-spacing: 8px;
+      color: #1c1c1e;
+      text-transform: uppercase;
     }
+
     .header p {
-      color: #7a6e64;
-      font-size: 15px;
-      margin-top: 6px;
+      font-size: 16px;
+      color: #8e8e93;
+      margin-top: 8px;
+      font-weight: 300;
+      letter-spacing: 1px;
     }
+
+    /* ===== СЕТКА ТОВАРОВ ===== */
     .catalog {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 30px;
-      padding: 40px 0;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 40px 30px;
+      padding: 8px 0 40px;
     }
+
+    /* ===== КАРТОЧКА ТОВАРА (Apple-стиль) ===== */
     .product {
       background: #ffffff;
-      border-radius: 16px;
-      padding: 18px 18px 22px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.04);
-      transition: transform 0.2s;
+      border-radius: 20px;
+      padding: 24px 24px 28px;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.04);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
       display: flex;
       flex-direction: column;
     }
+
     .product:hover {
-      transform: translateY(-4px);
+      transform: translateY(-6px);
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
     }
+
     .product img {
       width: 100%;
       aspect-ratio: 1 / 1;
       object-fit: contain;
-      background: #f5f2ef;
-      border-radius: 12px;
-      margin-bottom: 14px;
+      background: #f5f5f7;
+      border-radius: 16px;
+      margin-bottom: 18px;
+      transition: opacity 0.2s;
     }
+
     .product .brand {
-      font-size: 13px;
+      font-size: 12px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: #9a8b7e;
+      letter-spacing: 1.2px;
+      color: #8e8e93;
       margin-bottom: 2px;
-    }
-    .product .name {
-      font-size: 18px;
       font-weight: 500;
-      margin-bottom: 6px;
     }
-    .product .price {
-      font-size: 20px;
-      font-weight: 600;
-      color: #2c2c2c;
+
+    .product .name {
+      font-size: 22px;
+      font-weight: 500;
+      color: #1c1c1e;
       margin-bottom: 4px;
     }
-    .product .volume {
+
+    .product .description {
       font-size: 14px;
-      color: #6b5f54;
-      margin-bottom: 12px;
-    }
-    .product .notes {
-      font-size: 13px;
-      color: #8a7c6f;
+      color: #6e6e73;
+      line-height: 1.5;
       margin-bottom: 14px;
-      line-height: 1.4;
-      font-style: italic;
+      font-weight: 400;
     }
+
+    /* ===== ШЛЕЙФ АРОМАТА (градиентная полоска) ===== */
+    .scent-trail {
+      height: 2px;
+      width: 60px;
+      border-radius: 2px;
+      margin: 0 0 14px 0;
+      background: linear-gradient(90deg, #c0a080, #e8d5c0, #c0a080);
+    }
+
+    /* ===== ЦЕНЫ ===== */
+    .prices {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 20px;
+      margin-bottom: 18px;
+      font-size: 15px;
+      font-weight: 400;
+      color: #1c1c1e;
+    }
+
+    .prices span {
+      background: #f5f5f7;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-weight: 500;
+      font-size: 14px;
+      color: #1c1c1e;
+    }
+
+    .prices span small {
+      font-weight: 300;
+      color: #8e8e93;
+      margin-right: 2px;
+    }
+
+    /* ===== КНОПКА TELEGRAM ===== */
     .btn-tg {
       display: inline-block;
-      background: #0088cc;
+      background: #1c1c1e;
       color: #fff;
       text-align: center;
-      padding: 12px 0;
-      border-radius: 30px;
+      padding: 14px 0;
+      border-radius: 40px;
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 500;
       font-size: 16px;
-      transition: background 0.2s;
+      transition: background 0.25s ease, transform 0.15s;
       margin-top: auto;
       width: 100%;
+      letter-spacing: 0.3px;
     }
+
     .btn-tg:hover {
-      background: #006699;
+      background: #3a3a3c;
+      transform: scale(1.01);
     }
+
+    /* ===== ПАМЯТКА (Apple-стиль) ===== */
     .reminder {
-      background: #f5f1ed;
-      border-left: 4px solid #0088cc;
-      border-radius: 10px;
-      padding: 14px 16px;
-      margin-top: 14px;
+      background: #f5f5f7;
+      border-radius: 14px;
+      padding: 16px 18px;
+      margin-top: 16px;
       font-size: 13px;
-      color: #2d2a27;
+      color: #3a3a3c;
       line-height: 1.6;
+      border: 1px solid #e8e8ed;
     }
+
     .reminder strong {
       display: block;
-      font-size: 14px;
-      margin-bottom: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 2px;
+      color: #1c1c1e;
     }
+
     .reminder ol {
       padding-left: 20px;
-      margin: 4px 0 0;
+      margin: 0;
     }
+
     .reminder .fast {
       margin-top: 6px;
-      color: #6b5f54;
+      color: #8e8e93;
       font-size: 12px;
     }
+
+    /* ===== ПОДВАЛ ===== */
     .footer {
       text-align: center;
       font-size: 13px;
-      color: #9a8b7e;
-      border-top: 1px solid #e6e1db;
-      padding: 24px 0 10px;
+      color: #8e8e93;
+      border-top: 1px solid #e8e8ed;
+      padding: 24px 0 12px;
+      margin-top: 12px;
+      font-weight: 300;
+      letter-spacing: 0.5px;
     }
-    @media (max-width: 600px) {
+
+    /* ===== АДАПТАЦИЯ ===== */
+    @media (max-width: 700px) {
       .catalog {
         grid-template-columns: 1fr 1fr;
-        gap: 16px;
-        padding: 20px 0;
+        gap: 20px 16px;
+        padding: 0 0 30px;
       }
+
       .product {
-        padding: 12px 12px 18px;
+        padding: 16px 16px 20px;
       }
+
       .product .name {
-        font-size: 15px;
+        font-size: 18px;
       }
-      .product .price {
-        font-size: 17px;
-      }
-      .btn-tg {
+
+      .prices {
         font-size: 14px;
-        padding: 10px 0;
+        gap: 6px 12px;
       }
+
+      .prices span {
+        font-size: 13px;
+        padding: 3px 12px;
+      }
+
+      .btn-tg {
+        font-size: 15px;
+        padding: 12px 0;
+      }
+
       .reminder {
         font-size: 12px;
-        padding: 10px 12px;
+        padding: 12px 14px;
+      }
+
+      .header h1 {
+        font-size: 32px;
+        letter-spacing: 6px;
       }
     }
-    @media (max-width: 420px) {
+
+    @media (max-width: 480px) {
       .catalog {
         grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .header h1 {
+        font-size: 28px;
+        letter-spacing: 4px;
+      }
+
+      .product .name {
+        font-size: 20px;
       }
     }
   </style>
 </head>
 <body>
+
 <div class="container">
+
+  <!-- ===== ШАПКА ===== -->
   <header class="header">
-    <h1>✨ Ваш бренд</h1>
+    <h1>Gusto</h1>
     <p>Нишевая парфюмерия для ценителей</p>
   </header>
+
+  <!-- ===== КАТАЛОГ ===== -->
   <section class="catalog">
+
+    <!-- ============================== -->
+    <!-- ==== ТОВАР 1: TUSCAN LEATHER ==== -->
+    <!-- ============================== -->
     <div class="product">
-      <img src="https://placehold.co/600x600/f5f2ef/9a8b7e?text=Флакон" alt="Название аромата">
+      <img
+        src="https://avatars.mds.yandex.net/i?id=89bba4f3b94aa9e27f3afc1fbbb5b6feb2f121ba-10415032-images-thumbs&n=13"
+        alt="Tom Ford Tuscan Leather"
+        loading="lazy"
+      />
       <div class="brand">Tom Ford</div>
-      <div class="name">Oud Wood</div>
-      <div class="price">4 500 ₽</div>
-      <div class="volume">Объём: 50 мл / 100 мл</div>
-      <div class="notes">Древесный, восточный — уд, сандал, кардамон</div>
-      <a href="https://t.me/ваш_логан" target="_blank" class="btn-tg">📱 Заказать в Telegram</a>
+      <div class="name">Tuscan Leather</div>
+      <div class="description">Кожа, малина и шафран. Смелый, дымный, чувственный — для тех, кто не боится быть в центре внимания.</div>
+      <div class="scent-trail"></div>
+      <div class="prices">
+        <span><small>30 мл</small> 10 900 ₽</span>
+        <span><small>50 мл</small> 16 500 ₽</span>
+        <span><small>100 мл</small> 25 900 ₽</span>
+      </div>
+      <a href="https://t.me/Kat_offic" target="_blank" class="btn-tg">📱 Заказать в Telegram</a>
       <div class="reminder">
-        <strong>📸 Памятка для покупателя:</strong>
+        <strong>📸 Памятка для покупателя</strong>
         <ol>
           <li>Нажмите кнопку выше</li>
-          <li>Сделайте скриншот ЭТОЙ карточки товара</li>
+          <li>Сделайте скриншот этой карточки</li>
           <li>Отправьте скриншот в Telegram</li>
-          <li>Напишите желаемый объём (50 или 100 мл)</li>
+          <li>Укажите желаемый объём</li>
         </ol>
         <div class="fast">⏱ Ответ в течение 5 минут</div>
       </div>
     </div>
+
+    <!-- ============================== -->
+    <!-- ==== ТОВАР 2: LOST CHERRY ==== -->
+    <!-- ============================== -->
     <div class="product">
-      <img src="https://placehold.co/600x600/f5f2ef/9a8b7e?text=Флакон" alt="Название аромата">
-      <div class="brand">Le Labo</div>
-      <div class="name">Santal 33</div>
-      <div class="price">5 200 ₽</div>
-      <div class="volume">Объём: 50 мл / 100 мл</div>
-      <div class="notes">Древесный, кожаный — сандал, кедр, ирис</div>
-      <a href="https://t.me/ваш_логан" target="_blank" class="btn-tg">📱 Заказать в Telegram</a>
+      <img
+        src="https://avatars.mds.yandex.net/i?id=a543836f153a9476b3d3fb1e35cd86db99d8bc99-5091797-images-thumbs&n=13"
+        alt="Tom Ford Lost Cherry"
+        loading="lazy"
+      />
+      <div class="brand">Tom Ford</div>
+      <div class="name">Lost Cherry</div>
+      <div class="description">Черная вишня, миндаль и жасмин. Сладкий, опьяняющий, запретный — как первый укус спелого плода.</div>
+      <div class="scent-trail"></div>
+      <div class="prices">
+        <span><small>30 мл</small> 18 500 ₽</span>
+        <span><small>50 мл</small> 27 500 ₽</span>
+        <span><small>100 мл</small> 41 500 ₽</span>
+      </div>
+      <a href="https://t.me/Kat_offic" target="_blank" class="btn-tg">📱 Заказать в Telegram</a>
       <div class="reminder">
-        <strong>📸 Памятка для покупателя:</strong>
+        <strong>📸 Памятка для покупателя</strong>
         <ol>
           <li>Нажмите кнопку выше</li>
-          <li>Сделайте скриншот ЭТОЙ карточки товара</li>
+          <li>Сделайте скриншот этой карточки</li>
           <li>Отправьте скриншот в Telegram</li>
-          <li>Напишите желаемый объём (50 или 100 мл)</li>
+          <li>Укажите желаемый объём</li>
         </ol>
         <div class="fast">⏱ Ответ в течение 5 минут</div>
       </div>
     </div>
+
+    <!-- ============================== -->
+    <!-- ==== ТОВАР 3: FOUGERE D'ARGENT ==== -->
+    <!-- ============================== -->
     <div class="product">
-      <img src="https://placehold.co/600x600/f5f2ef/9a8b7e?text=Флакон" alt="Название аромата">
-      <div class="brand">Diptyque</div>
-      <div class="name">Philosykos</div>
-      <div class="price">4 800 ₽</div>
-      <div class="volume">Объём: 50 мл / 100 мл</div>
-      <div class="notes">Зелёный, фруктовый — инжир, кокос, кедр</div>
-      <a href="https://t.me/ваш_логан" target="_blank" class="btn-tg">📱 Заказать в Telegram</a>
+      <img
+        src="https://avatars.mds.yandex.net/i?id=52d3c77ca6edca8d8d1b5d68f4b39a38ed4d7123-11509297-images-thumbs&n=13"
+        alt="Tom Ford Fougere D'Argent"
+        loading="lazy"
+      />
+      <div class="brand">Tom Ford</div>
+      <div class="name">Fougere D'Argent</div>
+      <div class="description">Лаванда, имбирь и дуб. Аристократичный, свежий, бархатный — идеальный баланс классики и современности.</div>
+      <div class="scent-trail"></div>
+      <div class="prices">
+        <span><small>30 мл</small> 12 900 ₽</span>
+        <span><small>50 мл</small> 18 900 ₽</span>
+        <span><small>100 мл</small> 28 500 ₽</span>
+      </div>
+      <a href="https://t.me/Kat_offic" target="_blank" class="btn-tg">📱 Заказать в Telegram</a>
       <div class="reminder">
-        <strong>📸 Памятка для покупателя:</strong>
+        <strong>📸 Памятка для покупателя</strong>
         <ol>
           <li>Нажмите кнопку выше</li>
-          <li>Сделайте скриншот ЭТОЙ карточки товара</li>
+          <li>Сделайте скриншот этой карточки</li>
           <li>Отправьте скриншот в Telegram</li>
-          <li>Напишите желаемый объём (50 или 100 мл)</li>
+          <li>Укажите желаемый объём</li>
         </ol>
         <div class="fast">⏱ Ответ в течение 5 минут</div>
       </div>
     </div>
+
   </section>
+
+  <!-- ===== ПОДВАЛ ===== -->
   <footer class="footer">
-    © 2026 Ваш бренд. Все ароматы оригинальны.
+    © 2026 Gusto. Все ароматы оригинальны.
   </footer>
+
 </div>
+
 </body>
 </html>
