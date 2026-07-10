@@ -26,7 +26,7 @@
       padding: 0 24px 40px;
     }
 
-    /* ===== ЭКРАН-ЗАСТАВКА (GUSTO на полэкрана) ===== */
+    /* ===== ЭКРАН-ЗАСТАВКА ===== */
     .splash {
       position: fixed;
       top: 0;
@@ -43,6 +43,68 @@
       transition: height 1.2s cubic-bezier(0.77, 0, 0.18, 1),
                   opacity 0.8s ease;
       overflow: hidden;
+    }
+
+    /* ===== ЭФФЕКТ РАСПЫЛЕНИЯ (облако тумана) ===== */
+    .splash::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,180,160,0.15) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      animation: spray 1.6s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes spray {
+      0% {
+        width: 0;
+        height: 0;
+        opacity: 0;
+      }
+      40% {
+        opacity: 1;
+      }
+      100% {
+        width: 120vw;
+        height: 120vw;
+        opacity: 0;
+      }
+    }
+
+    /* ===== ВТОРОЙ СЛОЙ ТУМАНА ===== */
+    .splash::after {
+      content: '';
+      position: absolute;
+      top: 40%;
+      left: 30%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(180,160,140,0.10) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      animation: spray2 2.0s ease-out 0.3s forwards;
+      pointer-events: none;
+    }
+
+    @keyframes spray2 {
+      0% {
+        width: 0;
+        height: 0;
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        width: 80vw;
+        height: 80vw;
+        opacity: 0;
+      }
     }
 
     .splash.shrink {
@@ -63,6 +125,7 @@
       text-transform: uppercase;
       transition: all 1.2s cubic-bezier(0.77, 0, 0.18, 1);
       text-align: center;
+      z-index: 2;
     }
 
     .splash.shrink h1 {
@@ -78,6 +141,7 @@
       margin-top: 8px;
       transition: all 0.6s ease;
       opacity: 1;
+      z-index: 2;
     }
 
     .splash.shrink .sub {
@@ -86,7 +150,7 @@
       pointer-events: none;
     }
 
-    /* ===== ОСНОВНОЙ КОНТЕНТ (появляется после) ===== */
+    /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
     .main-content {
       opacity: 0;
       transition: opacity 1s ease 0.6s;
@@ -97,7 +161,7 @@
       opacity: 1;
     }
 
-    /* ===== ПОИСК ===== */
+    /* ===== ПОИСК (без лупы) ===== */
     .search-wrap {
       max-width: 460px;
       margin: 20px auto 10px;
@@ -106,7 +170,7 @@
 
     .search-wrap input {
       width: 100%;
-      padding: 14px 20px 14px 48px;
+      padding: 14px 20px;
       border-radius: 40px;
       border: 1px solid #ded9d4;
       background: #ffffff;
@@ -117,6 +181,7 @@
       transition: 0.25s;
       font-family: inherit;
       box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      text-align: center;
     }
 
     .search-wrap input:focus {
@@ -130,16 +195,6 @@
       font-weight: 300;
     }
 
-    .search-icon {
-      position: absolute;
-      left: 18px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 18px;
-      color: #a89f97;
-      pointer-events: none;
-    }
-
     .result-count {
       text-align: center;
       font-size: 14px;
@@ -149,7 +204,7 @@
       min-height: 24px;
     }
 
-    /* ===== АРОМАТ ДНЯ (яркий, контрастный) ===== */
+    /* ===== АРОМАТ ДНЯ (НОРМАЛЬНЫЙ ФЛАКОН) ===== */
     .daily-banner {
       background: linear-gradient(145deg, #2c2a28 0%, #1a1817 100%);
       border-radius: 28px;
@@ -167,14 +222,17 @@
       overflow: hidden;
     }
 
-    .daily-banner::before {
-      content: "✦";
-      font-size: 120px;
-      position: absolute;
-      right: -10px;
-      bottom: -40px;
-      color: rgba(255,255,255,0.03);
-      transform: rotate(-8deg);
+    .daily-banner .flacon-icon {
+      font-size: 48px;
+      line-height: 1;
+      filter: drop-shadow(0 4px 20px rgba(200,180,160,0.15));
+      animation: floatFlacon 3s ease-in-out infinite;
+      display: inline-block;
+    }
+
+    @keyframes floatFlacon {
+      0%, 100% { transform: translateY(0) rotate(-2deg); }
+      50% { transform: translateY(-4px) rotate(2deg); }
     }
 
     .daily-banner .label {
@@ -185,11 +243,7 @@
       font-weight: 400;
       display: flex;
       align-items: center;
-      gap: 10px;
-    }
-
-    .daily-banner .label span {
-      font-size: 20px;
+      gap: 14px;
     }
 
     .daily-banner .name {
@@ -251,20 +305,26 @@
       position: relative;
       border: 1px solid #f0ebe6;
       opacity: 0;
-      transform: translateY(40px);
+      transform: translateY(30px) scale(0.97);
     }
 
     .product.animate {
-      animation: cardIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation: cardIn 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
 
-    .product:nth-child(1) { animation-delay: 0.10s; }
-    .product:nth-child(2) { animation-delay: 0.22s; }
-    .product:nth-child(3) { animation-delay: 0.34s; }
+    .product:nth-child(1) { animation-delay: 0.15s; }
+    .product:nth-child(2) { animation-delay: 0.40s; }
+    .product:nth-child(3) { animation-delay: 0.65s; }
 
     @keyframes cardIn {
-      0% { opacity: 0; transform: translateY(40px); }
-      100% { opacity: 1; transform: translateY(0); }
+      0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.97);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     .product:hover {
@@ -475,6 +535,7 @@
       .daily-banner { padding: 20px 22px; }
       .daily-banner .name { font-size: 20px; }
       .daily-banner .btn-daily { font-size: 13px; padding: 10px 18px; }
+      .daily-banner .flacon-icon { font-size: 34px; }
 
       .splash.shrink { height: 70px; min-height: 70px; }
       .splash.shrink h1 { font-size: 24px; letter-spacing: 6px; }
@@ -486,7 +547,7 @@
       .splash h1 { font-size: 44px; letter-spacing: 8px; }
       .splash.shrink h1 { font-size: 20px; letter-spacing: 4px; }
       .product .name { font-size: 19px; }
-      .search-wrap input { font-size: 15px; padding: 12px 16px 12px 42px; }
+      .search-wrap input { font-size: 15px; padding: 12px 16px; }
     }
   </style>
 </head>
@@ -503,17 +564,19 @@
 
   <div class="container">
 
-    <!-- ПОИСК -->
+    <!-- ПОИСК (без лупы) -->
     <div class="search-wrap">
-      <span class="search-icon">🔍</span>
       <input type="text" id="searchInput" placeholder="Искать аромат или бренд..." autocomplete="off" />
     </div>
     <div class="result-count" id="resultCount"></div>
 
-    <!-- АРОМАТ ДНЯ -->
+    <!-- АРОМАТ ДНЯ (с флаконом) -->
     <div class="daily-banner" id="dailyBanner">
       <div>
-        <div class="label"><span>🧴</span> Аромат дня</div>
+        <div class="label">
+          <span class="flacon-icon">🧴</span>
+          Аромат дня
+        </div>
         <div class="name" id="dailyName">Загрузка...</div>
         <div class="brand" id="dailyBrand"></div>
       </div>
