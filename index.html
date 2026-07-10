@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Название бренда — Парфюм</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #faf8f6;
+      color: #1e1e1e;
+      padding: 20px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .header {
+      text-align: center;
+      padding: 30px 0 20px;
+      border-bottom: 1px solid #e6e1db;
+    }
+    .header h1 {
+      font-size: 28px;
+      font-weight: 400;
+      letter-spacing: 2px;
+    }
+    .header p {
+      color: #7a6e64;
+      font-size: 15px;
+      margin-top: 6px;
+    }
+    .catalog {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 30px;
+      padding: 40px 0;
+    }
+    .product {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 18px 18px 22px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+      transition: transform 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+    .product:hover {
+      transform: translateY(-4px);
+    }
+    .product img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: contain;
+      background: #f5f2ef;
+      border-radius: 12px;
+      margin-bottom: 14px;
+    }
+    .product .brand {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #9a8b7e;
+      margin-bottom: 2px;
+    }
+    .product .name {
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+    .product .price {
+      font-size: 20px;
+      font-weight: 600;
+      color: #2c2c2c;
+      margin-bottom: 4px;
+    }
+    .product .volume {
+      font-size: 14px;
+      color: #6b5f54;
+      margin-bottom: 12px;
+    }
+    .product .notes {
+      font-size: 13px;
+      color: #8a7c6f;
+      margin-bottom: 14px;
+      line-height: 1.4;
+      font-style: italic;
+    }
+    .btn-tg {
+      display: inline-block;
+      background: #0088cc;
+      color: #fff;
+      text-align: center;
+      padding: 12px 0;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      transition: background 0.2s;
+      margin-top: auto;
+      width: 100%;
+    }
+    .btn-tg:hover {
+      background: #006699;
+    }
+    .reminder {
+      background: #f5f1ed;
+      border-left: 4px solid #0088cc;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 14px;
+      font-size: 13px;
+      color: #2d2a27;
+      line-height: 1.6;
+    }
+    .reminder strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    .reminder ol {
+      padding-left: 20px;
+      margin: 4px 0 0;
+    }
+    .reminder .fast {
+      margin-top: 6px;
+      color: #6b5f54;
+      font-size: 12px;
+    }
+    .footer {
+      text-align: center;
+      font-size: 13px;
+      color: #9a8b7e;
+      border-top: 1px solid #e6e1db;
+      padding: 24px 0 10px;
+    }
+    @media (max-width: 600px) {
+      .catalog {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        padding: 20px 0;
+      }
+      .product {
+        padding: 12px 12px 18px;
+      }
+      .product .name {
+        font-size: 15px;
+      }
+      .product .price {
+        font-size: 17px;
+      }
+      .btn-tg {
+        font-size: 14px;
+        padding: 10px 0;
+      }
+      .reminder {
+        font-size: 12px;
+        padding: 10px 12px;
+      }
+    }
+    @media (max-width: 420px) {
+      .catalog {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header class="header">
+    <h1>✨ Ваш бренд</h1>
+    <p>Нишевая парфюмерия для ценителей</p>
+  </header>
+  <section class="catalog">
+    <div class="product">
+      <img src="https://placehold.co/600x600/f5f2ef/9a8b7e?text=Флакон" alt="Название аромата">
+      <div class="brand">Tom Ford</div>
+      <div class="name">Oud Wood</div>
+      <div class="price">4 500 ₽</div>
+      <div class="volume">Объём: 50 мл / 100 мл</div>
+      <div class="notes">Древесный, восточный — уд, сандал, кардамон</div>
+      <a href="https://t.me/ваш_логан" target="_blank" class="btn-tg">📱 Заказать в Telegram</a>
+      <div class="reminder">
+        <strong>📸 Памятка для покупателя:</strong>
+        <ol>
+          <li>Нажмите кнопку выше</li>
+          <li>Сделайте скриншот ЭТОЙ карточки товара</li>
+          <li>Отправьте скриншот в Telegram</li>
+          <li>Напишите желаемый объём (50 или 100 мл)</li>
+        </ol>
+        <div class="fast">⏱ Ответ в течение 5 минут</div>
+      </div>
+    </div>
+    <div class="product">
+      <img src="https://placehold.co/600x600/f5f2ef/9a8b7e?text=Флакон" alt="Название аромата">
+      <div class="brand">Le Labo</div>
+      <div class="name">Santal 33</div>
+      <div class="price">5 200 ₽</div>
+      <div class="volume">Объём: 50 мл / 100 мл</div>
+      <div class="notes">Древесный, кожаный — сандал, кедр, ирис</div>
+      <a href="https://t.me/ваш_логан" target="_blank" class="btn-tg">📱 Заказать в Telegram</a>
+      <div class="reminder">
+        <strong>📸 Памятка для покупателя:</strong>
+        <ol>
+          <li>Нажмите кнопку выше</li>
+          <li>Сделайте скриншот ЭТОЙ карточки товара</li>
+          <li>Отправьте скриншот в Telegram</li>
+          <li>Напишите желаемый объём (50 или 100 мл)</li>
+        </ol>
+        <div class="fast">⏱ Ответ в течение 5 минут</div>
+      </div>
+    </div>
+    <div class="product">
+      <img src="https://placehold.co/600x600/f5f2ef/9a8b7e?text=Флакон" alt="Название аромата">
+      <div class="brand">Diptyque</div>
+      <div class="name">Philosykos</div>
+      <div class="price">4 800 ₽</div>
+      <div class="volume">Объём: 50 мл / 100 мл</div>
+      <div class="notes">Зелёный, фруктовый — инжир, кокос, кедр</div>
+      <a href="https://t.me/ваш_логан" target="_blank" class="btn-tg">📱 Заказать в Telegram</a>
+      <div class="reminder">
+        <strong>📸 Памятка для покупателя:</strong>
+        <ol>
+          <li>Нажмите кнопку выше</li>
+          <li>Сделайте скриншот ЭТОЙ карточки товара</li>
+          <li>Отправьте скриншот в Telegram</li>
+          <li>Напишите желаемый объём (50 или 100 мл)</li>
+        </ol>
+        <div class="fast">⏱ Ответ в течение 5 минут</div>
+      </div>
+    </div>
+  </section>
+  <footer class="footer">
+    © 2026 Ваш бренд. Все ароматы оригинальны.
+  </footer>
+</div>
+</body>
+</html>
