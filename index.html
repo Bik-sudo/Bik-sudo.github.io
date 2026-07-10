@@ -349,14 +349,14 @@
     }
 
     /* ==============================================================
-       2. РУКИ (появляются после GUSTO)
+       2. РУКИ (реалистичные женские)
     ============================================================== */
     .hands {
       position: fixed;
-      bottom: 20%;
+      bottom: 18%;
       left: 0;
       width: 100%;
-      height: 180px;
+      height: 200px;
       pointer-events: none;
       z-index: 20;
       opacity: 0;
@@ -369,34 +369,41 @@
 
     .hand {
       position: absolute;
-      font-size: 70px;
-      animation: handMove 3.0s var(--ease) infinite alternate;
-      filter: drop-shadow(0 8px 30px rgba(0, 0, 0, 0.10));
+      bottom: 0;
+      width: 140px;
+      height: auto;
+      filter: drop-shadow(0 8px 30px rgba(0, 0, 0, 0.08));
+      animation: handMove 3.2s var(--ease) infinite alternate;
+    }
+
+    .hand img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
 
     .hand--left {
-      left: 5%;
-      bottom: 0%;
+      left: 2%;
       animation-delay: 0.0s;
-      transform: rotate(-10deg);
+      transform-origin: bottom center;
     }
 
     .hand--right {
-      right: 5%;
-      bottom: 0%;
-      animation-delay: 1.5s;
-      transform: rotate(10deg) scaleX(-1);
+      right: 2%;
+      animation-delay: 1.6s;
+      transform-origin: bottom center;
+      transform: scaleX(-1);
     }
 
     @keyframes handMove {
       0% {
-        transform: translateY(0) rotate(-10deg) scale(0.95);
+        transform: translateY(0) rotate(-4deg) scale(0.96);
       }
       50% {
-        transform: translateY(-20px) rotate(-5deg) scale(1.0);
+        transform: translateY(-25px) rotate(-1deg) scale(1.0);
       }
       100% {
-        transform: translateY(0) rotate(-10deg) scale(0.95);
+        transform: translateY(0) rotate(-4deg) scale(0.96);
       }
     }
 
@@ -406,13 +413,13 @@
 
     @keyframes handMoveRight {
       0% {
-        transform: translateY(0) rotate(10deg) scale(0.95) scaleX(-1);
+        transform: translateY(0) rotate(4deg) scale(0.96) scaleX(-1);
       }
       50% {
-        transform: translateY(-20px) rotate(5deg) scale(1.0) scaleX(-1);
+        transform: translateY(-25px) rotate(1deg) scale(1.0) scaleX(-1);
       }
       100% {
-        transform: translateY(0) rotate(10deg) scale(0.95) scaleX(-1);
+        transform: translateY(0) rotate(4deg) scale(0.96) scaleX(-1);
       }
     }
 
@@ -1046,8 +1053,12 @@
         letter-spacing: 18px;
       }
 
+      .hand {
+        width: 80px;
+      }
       .hands {
-        display: none;
+        height: 120px;
+        bottom: 14%;
       }
     }
 
@@ -1112,8 +1123,12 @@
         font-size: 15px;
       }
 
+      .hand {
+        width: 60px;
+      }
       .hands {
-        display: none;
+        height: 90px;
+        bottom: 10%;
       }
     }
 
@@ -1159,11 +1174,15 @@
   </div>
 
   <!-- =============================================================
-       РУКИ (появляются после GUSTO)
+       РУКИ (реалистичные женские)
   ============================================================= -->
   <div class="hands" id="hands">
-    <div class="hand hand--left">🤲</div>
-    <div class="hand hand--right">🤲</div>
+    <div class="hand hand--left">
+      <img src="https://i.ibb.co/cx9R5zK/hand-left.png" alt="Женская рука" />
+    </div>
+    <div class="hand hand--right">
+      <img src="https://i.ibb.co/cx9R5zK/hand-left.png" alt="Женская рука" />
+    </div>
   </div>
 
   <!-- =============================================================
@@ -1303,13 +1322,8 @@
       const main = document.getElementById('main');
       const hands = document.getElementById('hands');
 
-      // GUSTO сжимается
       setTimeout(() => splash.classList.add('shrink'), 900);
-
-      // Появляются руки
       setTimeout(() => hands.classList.add('visible'), 2200);
-
-      // Появляется контент
       setTimeout(() => main.classList.add('visible'), 1600);
 
       // --- АРОМАТ ДНЯ ---
@@ -1414,7 +1428,7 @@
 
       loadFavorites();
 
-      console.log('✨ Gusto готов — руки расставляют товары!');
+      console.log('✨ Gusto готов — реалистичные руки расставляют товары!');
 
     })();
   </script>
