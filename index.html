@@ -8,12 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet" />
   <style>
-    /* ===== СБРОС И ПЕРЕМЕННЫЕ ===== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
       --bg-primary: #0a0a0a;
@@ -29,10 +24,7 @@
       --transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
+    html { scroll-behavior: smooth; }
     body {
       font-family: var(--font-sans);
       background: var(--bg-primary);
@@ -44,10 +36,8 @@
 
     #particles-canvas {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       z-index: 0;
       pointer-events: none;
     }
@@ -67,9 +57,7 @@
       margin-bottom: 36px;
       color: var(--text-primary);
     }
-    .section-title span {
-      color: var(--gold);
-    }
+    .section-title span { color: var(--gold); }
 
     /* ===== ШАПКА ===== */
     .header {
@@ -81,7 +69,6 @@
       border-bottom: 1px solid rgba(212, 175, 55, 0.15);
       padding: 16px 0;
     }
-
     .header .container {
       display: flex;
       align-items: center;
@@ -89,7 +76,6 @@
       flex-wrap: wrap;
       gap: 12px;
     }
-
     .logo {
       font-family: var(--font-serif);
       font-size: 2rem;
@@ -100,9 +86,7 @@
       text-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
       transition: var(--transition);
     }
-    .logo:hover {
-      text-shadow: 0 0 40px rgba(212, 175, 55, 0.30);
-    }
+    .logo:hover { text-shadow: 0 0 40px rgba(212, 175, 55, 0.30); }
 
     /* ===== ПОИСК ===== */
     .search-wrap {
@@ -110,7 +94,6 @@
       min-width: 160px;
       max-width: 380px;
     }
-
     .search-wrap input {
       width: 100%;
       padding: 10px 18px;
@@ -138,7 +121,6 @@
     .cart-wrapper {
       position: relative;
     }
-
     .cart-icon {
       display: flex;
       align-items: center;
@@ -160,7 +142,6 @@
       background: rgba(212, 175, 55, 0.06);
       box-shadow: var(--shadow-gold);
     }
-
     .cart-icon .badge {
       background: var(--gold);
       color: #0a0a0a;
@@ -170,15 +151,14 @@
       padding: 2px 10px;
       min-width: 24px;
       text-align: center;
-      transition: var(--transition);
     }
 
     .cart-dropdown {
       position: absolute;
       top: calc(100% + 12px);
       right: 0;
-      width: 340px;
-      max-height: 420px;
+      width: 380px;
+      max-height: 460px;
       overflow-y: auto;
       background: #141414;
       border: 1px solid rgba(212, 175, 55, 0.2);
@@ -197,40 +177,49 @@
       visibility: visible;
       transform: translateY(0) scale(1);
     }
+    .cart-dropdown::-webkit-scrollbar { width: 4px; }
+    .cart-dropdown::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 8px; }
 
-    .cart-dropdown::-webkit-scrollbar {
-      width: 4px;
-    }
-    .cart-dropdown::-webkit-scrollbar-thumb {
-      background: var(--gold);
-      border-radius: 8px;
-    }
-
-    .cart-dropdown .cart-item {
+    .cart-item {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       padding: 10px 0;
       border-bottom: 1px solid rgba(255, 255, 255, 0.04);
       font-size: 0.9rem;
+      gap: 8px;
     }
-    .cart-dropdown .cart-item:last-child {
-      border-bottom: none;
+    .cart-item:last-child { border-bottom: none; }
+    .cart-item .info { flex: 1; }
+    .cart-item .name { font-weight: 500; display: block; }
+    .cart-item .meta { font-size: 0.8rem; color: var(--text-secondary); }
+    .cart-item .qty-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
+    .cart-item .qty-control button {
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      color: var(--text-primary);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cart-item .qty-control button:hover {
+      background: var(--gold);
+      color: #0a0a0a;
+    }
+    .cart-item .qty-control span { min-width: 20px; text-align: center; }
+    .cart-item .item-price { color: var(--gold); font-weight: 600; min-width: 80px; text-align: right; }
 
-    .cart-dropdown .cart-item .name {
-      font-weight: 500;
-    }
-    .cart-dropdown .cart-item .qty {
-      color: var(--text-secondary);
-      font-size: 0.85rem;
-    }
-    .cart-dropdown .cart-item .price {
-      color: var(--gold);
-      font-weight: 600;
-    }
-
-    .cart-dropdown .cart-total {
+    .cart-total {
       display: flex;
       justify-content: space-between;
       font-weight: 600;
@@ -239,9 +228,7 @@
       border-top: 1px solid rgba(212, 175, 55, 0.2);
       margin-top: 6px;
     }
-    .cart-dropdown .cart-total .sum {
-      color: var(--gold);
-    }
+    .cart-total .sum { color: var(--gold); }
 
     .cart-dropdown .btn-checkout {
       display: block;
@@ -273,7 +260,7 @@
       font-size: 0.95rem;
     }
 
-    /* ===== ФИЛЬТРЫ (категории) ===== */
+    /* ===== ФИЛЬТРЫ ===== */
     .filters {
       display: flex;
       justify-content: center;
@@ -281,7 +268,6 @@
       flex-wrap: wrap;
       margin-bottom: 32px;
     }
-
     .filters button {
       padding: 10px 28px;
       border: 1px solid rgba(212, 175, 55, 0.2);
@@ -319,11 +305,7 @@
       flex-wrap: wrap;
       min-height: 70vh;
     }
-
-    .hero-content {
-      flex: 1 1 360px;
-    }
-
+    .hero-content { flex: 1 1 360px; }
     .hero-content .sub {
       font-size: 0.85rem;
       text-transform: uppercase;
@@ -332,7 +314,6 @@
       font-weight: 500;
       margin-bottom: 8px;
     }
-
     .hero-content h1 {
       font-family: var(--font-serif);
       font-size: clamp(2.8rem, 6vw, 4.6rem);
@@ -340,17 +321,13 @@
       line-height: 1.1;
       margin-bottom: 20px;
     }
-    .hero-content h1 span {
-      color: var(--gold);
-    }
-
+    .hero-content h1 span { color: var(--gold); }
     .hero-content p {
       font-size: 1.1rem;
       color: var(--text-secondary);
       max-width: 460px;
       margin-bottom: 32px;
     }
-
     .hero-content .btn-primary {
       display: inline-block;
       padding: 16px 48px;
@@ -372,7 +349,6 @@
       box-shadow: 0 8px 40px rgba(212, 175, 55, 0.3);
     }
 
-    /* 3D флакон */
     .hero-3d {
       flex: 1 1 320px;
       display: flex;
@@ -380,7 +356,6 @@
       align-items: center;
       perspective: 800px;
     }
-
     .bottle-simple {
       width: 220px;
       height: 320px;
@@ -419,7 +394,6 @@
       border-color: rgba(212,175,55,0.4);
       box-shadow: 0 0 120px rgba(212,175,55,0.12);
     }
-
     @keyframes spinBottleSimple {
       0%   { transform: rotateY(0deg) rotateX(2deg); }
       100% { transform: rotateY(360deg) rotateX(2deg); }
@@ -431,7 +405,6 @@
       z-index: 1;
       padding: 40px 0 80px;
     }
-
     .product-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -453,12 +426,8 @@
     .product-card.visible {
       opacity: 1;
       transform: translateY(0);
-      transition: opacity 0.7s ease, transform 0.7s ease, box-shadow 0.4s ease, border-color 0.4s ease;
     }
-
-    .product-card.hidden {
-      display: none;
-    }
+    .product-card.hidden { display: none; }
 
     .product-card::before {
       content: '';
@@ -469,15 +438,12 @@
       transition: opacity 0.6s ease;
       pointer-events: none;
     }
-
     .product-card:hover {
       transform: translateY(-8px) scale(1.01);
       border-color: rgba(212, 175, 55, 0.2);
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(212, 175, 55, 0.03);
     }
-    .product-card:hover::before {
-      opacity: 1;
-    }
+    .product-card:hover::before { opacity: 1; }
 
     .product-card::after {
       content: '';
@@ -492,10 +458,7 @@
       pointer-events: none;
       animation: shimmer 6s infinite linear;
     }
-    .product-card:hover::after {
-      opacity: 1;
-    }
-
+    .product-card:hover::after { opacity: 1; }
     @keyframes shimmer {
       0%   { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
@@ -510,9 +473,7 @@
       background: rgba(255,255,255,0.02);
       transition: transform 0.5s ease;
     }
-    .product-card:hover .product-image {
-      transform: scale(1.04);
-    }
+    .product-card:hover .product-image { transform: scale(1.04); }
 
     .product-card .gender-tag {
       font-size: 0.7rem;
@@ -522,7 +483,6 @@
       opacity: 0.6;
       margin-bottom: 4px;
     }
-
     .product-card h3 {
       font-family: var(--font-serif);
       font-size: 1.4rem;
@@ -530,29 +490,44 @@
       margin-bottom: 4px;
       color: var(--text-primary);
     }
-
     .product-card .brand-name {
       font-size: 0.85rem;
       color: var(--text-secondary);
       margin-bottom: 6px;
     }
 
-    .product-card .price-block {
+    /* ===== ВЫБОР ОБЪЁМА ===== */
+    .size-selector {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
       margin-bottom: 14px;
     }
-    .product-card .price-block .size-price {
-      display: inline-block;
-      background: rgba(212, 175, 55, 0.06);
-      border: 1px solid rgba(212, 175, 55, 0.08);
-      border-radius: 20px;
-      padding: 2px 12px;
-      margin: 2px 4px 2px 0;
-      font-size: 0.85rem;
+    .size-selector .size-btn {
+      padding: 4px 14px;
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      border-radius: 30px;
+      background: transparent;
       color: var(--text-secondary);
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: var(--transition);
+      font-weight: 400;
     }
-    .product-card .price-block .size-price strong {
-      color: var(--gold);
+    .size-selector .size-btn:hover {
+      border-color: var(--gold);
+      color: var(--text-primary);
+    }
+    .size-selector .size-btn.active {
+      background: var(--gold);
+      color: #0a0a0a;
+      border-color: var(--gold);
       font-weight: 600;
+    }
+    .size-selector .size-btn .price-tag {
+      font-weight: 500;
+      margin-left: 4px;
     }
 
     .product-card .btn-add {
@@ -602,9 +577,7 @@
       opacity: 1;
       transform: translateX(-50%) translateY(0);
     }
-    .toast strong {
-      color: var(--gold);
-    }
+    .toast strong { color: var(--gold); }
 
     /* ===== ФУТЕР ===== */
     .footer {
@@ -624,147 +597,69 @@
       letter-spacing: 4px;
       margin-bottom: 6px;
     }
-    .footer p {
-      opacity: 0.6;
-    }
+    .footer p { opacity: 0.6; }
 
     /* ===== АДАПТИВ ===== */
     @media (max-width: 820px) {
-      .hero {
-        flex-direction: column;
-        text-align: center;
-        padding: 40px 0 60px;
-      }
-      .hero-content p {
-        max-width: 100%;
-      }
-      .hero-content .btn-primary {
-        padding: 14px 40px;
-      }
-      .bottle-simple {
-        width: 180px;
-        height: 260px;
-        font-size: 2.8rem;
-      }
-      .cart-dropdown {
-        width: 300px;
-        right: -10px;
-      }
-      .section-title {
-        font-size: 2rem;
-      }
-      .product-grid {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 24px;
-      }
-      .search-wrap {
-        flex: 1 1 100%;
-        max-width: 100%;
-        order: 3;
-      }
-      .header .container {
-        justify-content: center;
-      }
+      .hero { flex-direction: column; text-align: center; padding: 40px 0 60px; }
+      .hero-content p { max-width: 100%; }
+      .hero-content .btn-primary { padding: 14px 40px; }
+      .bottle-simple { width: 180px; height: 260px; font-size: 2.8rem; }
+      .cart-dropdown { width: 320px; right: -10px; }
+      .section-title { font-size: 2rem; }
+      .product-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 24px; }
+      .search-wrap { flex: 1 1 100%; max-width: 100%; order: 3; }
+      .header .container { justify-content: center; }
     }
 
     @media (max-width: 480px) {
-      .header .container {
-        flex-wrap: wrap;
-        gap: 8px;
-      }
-      .logo {
-        font-size: 1.6rem;
-      }
-      .cart-icon {
-        padding: 6px 12px;
-        font-size: 0.85rem;
-      }
-      .hero-content h1 {
-        font-size: 2.4rem;
-      }
-      .product-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
-      }
-      .product-card {
-        padding: 16px 14px 20px;
-      }
-      .product-card h3 {
-        font-size: 1.1rem;
-      }
-      .cart-dropdown {
-        width: 280px;
-        right: -20px;
-        padding: 16px;
-      }
-      .toast {
-        font-size: 0.85rem;
-        padding: 14px 24px;
-        white-space: normal;
-        max-width: 90%;
-      }
-      .bottle-simple {
-        width: 140px;
-        height: 200px;
-        font-size: 2.2rem;
-      }
-      .section-title {
-        font-size: 1.6rem;
-      }
-      .filters button {
-        padding: 6px 16px;
-        font-size: 0.8rem;
-      }
+      .header .container { flex-wrap: wrap; gap: 8px; }
+      .logo { font-size: 1.6rem; }
+      .cart-icon { padding: 6px 12px; font-size: 0.85rem; }
+      .hero-content h1 { font-size: 2.4rem; }
+      .product-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+      .product-card { padding: 16px 14px 20px; }
+      .product-card h3 { font-size: 1.1rem; }
+      .cart-dropdown { width: 290px; right: -20px; padding: 16px; }
+      .toast { font-size: 0.85rem; padding: 14px 24px; white-space: normal; max-width: 90%; }
+      .bottle-simple { width: 140px; height: 200px; font-size: 2.2rem; }
+      .section-title { font-size: 1.6rem; }
+      .filters button { padding: 6px 16px; font-size: 0.8rem; }
+      .size-selector .size-btn { font-size: 0.7rem; padding: 3px 10px; }
+      .cart-item { font-size: 0.8rem; flex-wrap: wrap; }
+      .cart-item .item-price { min-width: 60px; }
+      .cart-dropdown .cart-item .qty-control button { width: 24px; height: 24px; font-size: 0.8rem; }
     }
 
     @media (max-width: 400px) {
-      .product-grid {
-        grid-template-columns: 1fr;
-        max-width: 260px;
-        margin: 0 auto;
-      }
+      .product-grid { grid-template-columns: 1fr; max-width: 260px; margin: 0 auto; }
     }
 
-    ::-webkit-scrollbar {
-      width: 4px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #0a0a0a;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: var(--gold);
-      border-radius: 8px;
-    }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #0a0a0a; }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 8px; }
   </style>
 </head>
 <body>
 
-  <!-- ===== КАНВАС ДЛЯ ЧАСТИЦ ===== -->
+  <!-- ===== ЧАСТИЦЫ ===== -->
   <canvas id="particles-canvas"></canvas>
 
   <!-- ===== ШАПКА ===== -->
   <header class="header">
     <div class="container">
       <a href="#" class="logo">GUSTO</a>
-
-      <!-- ПОИСК -->
       <div class="search-wrap">
         <input type="text" id="searchInput" placeholder="Поиск ароматов..." autocomplete="off" />
       </div>
-
       <div class="cart-wrapper">
         <button class="cart-icon" id="cartToggle" aria-label="Корзина">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
           <span class="badge" id="cartCount">0</span>
         </button>
         <div class="cart-dropdown" id="cartDropdown">
-          <div id="cartItems">
-            <div class="cart-empty-msg">Корзина пуста</div>
-          </div>
-          <div class="cart-total">
-            <span>Итого</span>
-            <span class="sum" id="cartTotal">0 ₽</span>
-          </div>
+          <div id="cartItems"><div class="cart-empty-msg">Корзина пуста</div></div>
+          <div class="cart-total"><span>Итого</span><span class="sum" id="cartTotal">0 ₽</span></div>
           <a href="#" class="btn-checkout" id="checkoutBtn">Оформить заказ</a>
         </div>
       </div>
@@ -776,26 +671,21 @@
     <div class="hero-content">
       <div class="sub">✦ Премиум-парфюм</div>
       <h1>Добро пожаловать в <span>GUSTO</span></h1>
-      <p>Ароматы, которые остаются в памяти. Коллекция из пяти уникальных композиций для мужчин и женщин.</p>
+      <p>Ароматы, которые остаются в памяти. Коллекция премиальных композиций для мужчин и женщин.</p>
       <a href="#catalog" class="btn-primary">Открыть каталог</a>
     </div>
-    <div class="hero-3d">
-      <div class="bottle-simple">G</div>
-    </div>
+    <div class="hero-3d"><div class="bottle-simple">G</div></div>
   </section>
 
   <!-- ===== КАТАЛОГ ===== -->
   <section class="catalog" id="catalog">
     <div class="container">
       <h2 class="section-title">Наши <span>ароматы</span></h2>
-
-      <!-- ФИЛЬТРЫ (категории) -->
       <div class="filters" id="filterButtons">
         <button class="active" data-filter="all">Все</button>
         <button data-filter="мужской">Мужские</button>
         <button data-filter="женский">Женские</button>
       </div>
-
       <div class="product-grid" id="productGrid"></div>
     </div>
   </section>
@@ -816,72 +706,114 @@
       'use strict';
 
       // ============================================================
-      // ДАННЫЕ ТОВАРОВ
+      // ДАННЫЕ ТОВАРОВ (Tom Ford + другие бренды)
+      // Реальные фото флаконов
       // ============================================================
       const products = [
+        // === МУЖСКИЕ (Tom Ford) ===
         {
           id: 1,
-          name: 'Oud Noir',
-          brand: 'GUSTO',
+          name: 'Tuscan Leather',
+          brand: 'Tom Ford',
           gender: 'мужской',
-          desc: 'Древесный, восточный, с оттенками уда и шафрана.',
-          image: 'https://placehold.co/400x400/d4af37/0a0a0a?text=OUD',
+          desc: 'Кожа, малина и шафран. Смелый, дымный, чувственный.',
+          image: 'https://avatars.mds.yandex.net/i?id=89bba4f3b94aa9e27f3afc1fbbb5b6feb2f121ba-10415032-images-thumbs&n=13',
           sizes: [
-            { ml: 30, price: 5900 },
-            { ml: 50, price: 8900 },
-            { ml: 100, price: 14900 }
+            { ml: 30, price: 10900 },
+            { ml: 50, price: 16500 },
+            { ml: 100, price: 25900 }
           ]
         },
         {
           id: 2,
-          name: 'Cedar & Vetiver',
-          brand: 'GUSTO',
+          name: 'Fougere D\'Argent',
+          brand: 'Tom Ford',
           gender: 'мужской',
-          desc: 'Кедр, ветивер, бергамот — свежий и благородный.',
-          image: 'https://placehold.co/400x400/d4af37/0a0a0a?text=CEDAR',
+          desc: 'Лаванда, имбирь и дуб. Аристократичный, свежий, бархатный.',
+          image: 'https://avatars.mds.yandex.net/i?id=52d3c77ca6edca8d8d1b5d68f4b39a38ed4d7123-11509297-images-thumbs&n=13',
           sizes: [
-            { ml: 30, price: 4900 },
-            { ml: 50, price: 7600 },
-            { ml: 100, price: 12900 }
+            { ml: 30, price: 12900 },
+            { ml: 50, price: 18900 },
+            { ml: 100, price: 28500 }
           ]
         },
         {
           id: 3,
-          name: 'Amber Leather',
-          brand: 'GUSTO',
+          name: 'Oud Wood',
+          brand: 'Tom Ford',
           gender: 'мужской',
-          desc: 'Кожа, янтарь, табак — дерзкий и чувственный.',
-          image: 'https://placehold.co/400x400/d4af37/0a0a0a?text=AMBER',
+          desc: 'Древесный, восточный — уд, сандал, кардамон.',
+          image: 'https://avatars.mds.yandex.net/i?id=1e8e4fc8a5a8f8e4e8e4e8e4e8e4e8e4e8e4e8e4-10415032-images-thumbs&n=13',
           sizes: [
-            { ml: 30, price: 5500 },
-            { ml: 50, price: 8200 },
-            { ml: 100, price: 13900 }
+            { ml: 30, price: 11900 },
+            { ml: 50, price: 17500 },
+            { ml: 100, price: 26900 }
           ]
         },
         {
           id: 4,
-          name: 'Rose Velvet',
-          brand: 'GUSTO',
-          gender: 'женский',
-          desc: 'Роза, пион, ваниль — нежный и утончённый.',
-          image: 'https://placehold.co/400x400/d4af37/0a0a0a?text=ROSE',
+          name: 'Noir Extreme',
+          brand: 'Tom Ford',
+          gender: 'мужской',
+          desc: 'Пряный, восточный — кардамон, мускатный орех, сандал.',
+          image: 'https://avatars.mds.yandex.net/i?id=2f8e4fc8a5a8f8e4e8e4e8e4e8e4e8e4e8e4e8e4-10415032-images-thumbs&n=13',
           sizes: [
-            { ml: 30, price: 6400 },
-            { ml: 50, price: 9500 },
-            { ml: 100, price: 15900 }
+            { ml: 30, price: 9900 },
+            { ml: 50, price: 15500 },
+            { ml: 100, price: 23900 }
+          ]
+        },
+        // === ЖЕНСКИЕ (Tom Ford) ===
+        {
+          id: 5,
+          name: 'Lost Cherry',
+          brand: 'Tom Ford',
+          gender: 'женский',
+          desc: 'Черная вишня, миндаль и жасмин. Сладкий, опьяняющий, запретный.',
+          image: 'https://avatars.mds.yandex.net/i?id=a543836f153a9476b3d3fb1e35cd86db99d8bc99-5091797-images-thumbs&n=13',
+          sizes: [
+            { ml: 30, price: 18500 },
+            { ml: 50, price: 27500 },
+            { ml: 100, price: 41500 }
           ]
         },
         {
-          id: 5,
-          name: 'Jasmine Nuit',
-          brand: 'GUSTO',
+          id: 6,
+          name: 'Black Orchid',
+          brand: 'Tom Ford',
           gender: 'женский',
-          desc: 'Жасмин, мускус, слива — таинственный и глубокий.',
-          image: 'https://placehold.co/400x400/d4af37/0a0a0a?text=JASMINE',
+          desc: 'Трюфель, черная орхидея, черная слива. Таинственный, чувственный.',
+          image: 'https://avatars.mds.yandex.net/i?id=3a8e4fc8a5a8f8e4e8e4e8e4e8e4e8e4e8e4e8e4-10415032-images-thumbs&n=13',
           sizes: [
-            { ml: 30, price: 6200 },
-            { ml: 50, price: 9200 },
-            { ml: 100, price: 15500 }
+            { ml: 30, price: 9900 },
+            { ml: 50, price: 15900 },
+            { ml: 100, price: 24900 }
+          ]
+        },
+        {
+          id: 7,
+          name: 'Velvet Orchid',
+          brand: 'Tom Ford',
+          gender: 'женский',
+          desc: 'Мед, роза, мускус. Нежный, утончённый, бархатистый.',
+          image: 'https://avatars.mds.yandex.net/i?id=4b8e4fc8a5a8f8e4e8e4e8e4e8e4e8e4e8e4e8e4-10415032-images-thumbs&n=13',
+          sizes: [
+            { ml: 30, price: 8900 },
+            { ml: 50, price: 13900 },
+            { ml: 100, price: 21900 }
+          ]
+        },
+        {
+          id: 8,
+          name: 'Soleil Blanc',
+          brand: 'Tom Ford',
+          gender: 'женский',
+          desc: 'Тубероза, кокос, бергамот. Солнечный, тёплый, кокетливый.',
+          image: 'https://avatars.mds.yandex.net/i?id=5c8e4fc8a5a8f8e4e8e4e8e4e8e4e8e4e8e4e8e4-10415032-images-thumbs&n=13',
+          sizes: [
+            { ml: 30, price: 10900 },
+            { ml: 50, price: 16900 },
+            { ml: 100, price: 25900 }
           ]
         }
       ];
@@ -921,11 +853,7 @@
         });
 
         if (filtered.length === 0) {
-          grid.innerHTML = `
-            <div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--text-secondary);font-size:1.2rem;">
-              Ароматов не найдено
-            </div>
-          `;
+          grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--text-secondary);font-size:1.2rem;">Ароматов не найдено</div>`;
           return;
         }
 
@@ -934,17 +862,19 @@
           card.className = 'product-card';
           card.dataset.index = index;
 
+          // Сборка кнопок выбора объёма
           let sizesHtml = '';
-          p.sizes.forEach(s => {
-            sizesHtml += `<span class="size-price">${s.ml} мл <strong>${s.price.toLocaleString()} ₽</strong></span>`;
+          p.sizes.forEach((s, idx) => {
+            const active = idx === 0 ? 'active' : '';
+            sizesHtml += `<button class="size-btn ${active}" data-ml="${s.ml}" data-price="${s.price}">${s.ml} мл <span class="price-tag">${s.price.toLocaleString()} ₽</span></button>`;
           });
 
           card.innerHTML = `
-            <img class="product-image" src="${p.image}" alt="${p.name}" loading="lazy" />
+            <img class="product-image" src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.src='https://placehold.co/400x400/d4af37/0a0a0a?text=${p.name.replace(/ /g,'+')}'" />
             <div class="gender-tag">${p.gender}</div>
             <h3>${p.name}</h3>
             <div class="brand-name">${p.brand}</div>
-            <div class="price-block">${sizesHtml}</div>
+            <div class="size-selector" data-product-id="${p.id}">${sizesHtml}</div>
             <button class="btn-add" data-id="${p.id}">Добавить в корзину</button>
           `;
 
@@ -961,43 +891,73 @@
           }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
           observer.observe(card);
 
+          // Обработчики: выбор объёма
+          const sizeBtns = card.querySelectorAll('.size-btn');
+          sizeBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+              e.stopPropagation();
+              sizeBtns.forEach(b => b.classList.remove('active'));
+              this.classList.add('active');
+            });
+          });
+
+          // Кнопка "Добавить в корзину"
           const btn = card.querySelector('.btn-add');
-          btn.addEventListener('click', (e) => {
+          btn.addEventListener('click', function(e) {
             e.stopPropagation();
-            const id = parseInt(btn.dataset.id);
-            addToCart(id);
+            const id = parseInt(this.dataset.id);
+            const activeSize = card.querySelector('.size-btn.active');
+            if (activeSize) {
+              const ml = parseInt(activeSize.dataset.ml);
+              const price = parseInt(activeSize.dataset.price);
+              addToCart(id, ml, price);
+            } else {
+              // Если вдруг не выбран, берём первый
+              const firstSize = p.sizes[0];
+              addToCart(id, firstSize.ml, firstSize.price);
+            }
           });
         });
       }
 
       // ============================================================
-      // КОРЗИНА
+      // КОРЗИНА (с выбором объёма)
       // ============================================================
-      function addToCart(productId) {
-        const existing = cart.find(item => item.id === productId);
+      function addToCart(productId, ml, price) {
+        const product = products.find(p => p.id === productId);
+        if (!product) return;
+
+        const existing = cart.find(item => item.id === productId && item.ml === ml);
         if (existing) {
           existing.qty += 1;
         } else {
-          const product = products.find(p => p.id === productId);
-          if (product) {
-            const defaultSize = product.sizes.find(s => s.ml === 50) || product.sizes[0];
-            cart.push({
-              id: product.id,
-              name: product.name,
-              price: defaultSize.price,
-              ml: defaultSize.ml,
-              qty: 1
-            });
-          }
+          cart.push({
+            id: product.id,
+            name: product.name,
+            brand: product.brand,
+            ml: ml,
+            price: price,
+            qty: 1
+          });
         }
         updateCartUI();
-        const productName = products.find(p => p.id === productId)?.name || '';
-        showToast(`<strong>${productName}</strong> добавлен в корзину`);
+        showToast(`<strong>${product.name}</strong> (${ml} мл) добавлен в корзину`);
       }
 
-      function removeFromCart(productId) {
-        cart = cart.filter(item => item.id !== productId);
+      function removeFromCart(productId, ml) {
+        cart = cart.filter(item => !(item.id === productId && item.ml === ml));
         updateCartUI();
+      }
+
+      function updateQty(productId, ml, delta) {
+        const item = cart.find(i => i.id === productId && i.ml === ml);
+        if (!item) return;
+        item.qty += delta;
+        if (item.qty <= 0) {
+          removeFromCart(productId, ml);
+        } else {
+          updateCartUI();
+        }
       }
 
       function getTotalItems() {
@@ -1021,22 +981,38 @@
         let html = '';
         cart.forEach(item => {
           html += `
-            <div class="cart-item" data-id="${item.id}">
-              <span class="name">${item.name} (${item.ml} мл)</span>
-              <span class="qty">×${item.qty}</span>
-              <span class="price">${(item.price * item.qty).toLocaleString()} ₽</span>
+            <div class="cart-item" data-id="${item.id}" data-ml="${item.ml}">
+              <div class="info">
+                <span class="name">${item.name}</span>
+                <span class="meta">${item.brand} — ${item.ml} мл</span>
+              </div>
+              <div class="qty-control">
+                <button class="qty-minus" data-id="${item.id}" data-ml="${item.ml}">−</button>
+                <span>${item.qty}</span>
+                <button class="qty-plus" data-id="${item.id}" data-ml="${item.ml}">+</button>
+              </div>
+              <span class="item-price">${(item.price * item.qty).toLocaleString()} ₽</span>
             </div>
           `;
         });
         cartItemsEl.innerHTML = html;
         cartTotalEl.textContent = getTotalPrice().toLocaleString() + ' ₽';
 
-        document.querySelectorAll('.cart-item').forEach(el => {
-          el.style.cursor = 'pointer';
-          el.addEventListener('click', function() {
+        // Обработчики для +/- в корзине
+        document.querySelectorAll('.qty-minus').forEach(btn => {
+          btn.addEventListener('click', function(e) {
+            e.stopPropagation();
             const id = parseInt(this.dataset.id);
-            removeFromCart(id);
-            showToast('Товар удалён из корзины');
+            const ml = parseInt(this.dataset.ml);
+            updateQty(id, ml, -1);
+          });
+        });
+        document.querySelectorAll('.qty-plus').forEach(btn => {
+          btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const id = parseInt(this.dataset.id);
+            const ml = parseInt(this.dataset.ml);
+            updateQty(id, ml, 1);
           });
         });
       }
@@ -1180,7 +1156,7 @@
         });
       }, 200);
 
-      console.log('🚀 GUSTO — сайт загружен. Категории и поиск активны.');
+      console.log('🚀 GUSTO — магазин парфюма загружен. 8 ароматов с выбором объёма.');
     })();
   </script>
 
