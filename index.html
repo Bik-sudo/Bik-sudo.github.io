@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GUSTO — премиальная парфюмерия</title>
-  <!-- Шрифты -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet" />
@@ -21,7 +20,6 @@
       --bg-card: #141414;
       --gold: #d4af37;
       --gold-light: #e8c84a;
-      --gold-glow: rgba(212, 175, 55, 0.25);
       --text-primary: #ffffff;
       --text-secondary: #b0b0b0;
       --font-serif: 'Playfair Display', serif;
@@ -44,7 +42,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ===== КАНВАС ДЛЯ ЧАСТИЦ ===== */
     #particles-canvas {
       position: fixed;
       top: 0;
@@ -55,7 +52,6 @@
       pointer-events: none;
     }
 
-    /* ===== ОБЩИЕ КОМПОНЕНТЫ ===== */
     .container {
       max-width: 1240px;
       margin: 0 auto;
@@ -68,14 +64,14 @@
       font-weight: 600;
       letter-spacing: 2px;
       text-align: center;
-      margin-bottom: 48px;
+      margin-bottom: 36px;
       color: var(--text-primary);
     }
     .section-title span {
       color: var(--gold);
     }
 
-    /* ===== ШАПКА / ЛОГОТИП ===== */
+    /* ===== ШАПКА ===== */
     .header {
       position: sticky;
       top: 0;
@@ -90,6 +86,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
     .logo {
@@ -106,7 +104,37 @@
       text-shadow: 0 0 40px rgba(212, 175, 55, 0.30);
     }
 
-    /* ===== КОРЗИНА (иконка + дропдаун) ===== */
+    /* ===== ПОИСК ===== */
+    .search-wrap {
+      flex: 1 1 260px;
+      min-width: 160px;
+      max-width: 380px;
+    }
+
+    .search-wrap input {
+      width: 100%;
+      padding: 10px 18px;
+      border-radius: 40px;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(4px);
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      outline: none;
+      transition: var(--transition);
+    }
+    .search-wrap input::placeholder {
+      color: var(--text-secondary);
+      opacity: 0.6;
+    }
+    .search-wrap input:focus {
+      border-color: var(--gold);
+      background: rgba(255, 255, 255, 0.07);
+      box-shadow: 0 0 24px rgba(212, 175, 55, 0.04);
+    }
+
+    /* ===== КОРЗИНА ===== */
     .cart-wrapper {
       position: relative;
     }
@@ -245,7 +273,41 @@
       font-size: 0.95rem;
     }
 
-    /* ===== ГЕРОЙ-БЛОК С 3D ФЛАКОНОМ ===== */
+    /* ===== ФИЛЬТРЫ (категории) ===== */
+    .filters {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .filters button {
+      padding: 10px 28px;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 40px;
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition);
+      font-weight: 500;
+    }
+    .filters button:hover {
+      border-color: var(--gold);
+      color: var(--text-primary);
+      background: rgba(212, 175, 55, 0.04);
+    }
+    .filters button.active {
+      background: var(--gold);
+      color: #0a0a0a;
+      border-color: var(--gold);
+      font-weight: 600;
+      box-shadow: 0 4px 24px rgba(212, 175, 55, 0.15);
+    }
+
+    /* ===== ГЕРОЙ ===== */
     .hero {
       position: relative;
       z-index: 1;
@@ -310,7 +372,7 @@
       box-shadow: 0 8px 40px rgba(212, 175, 55, 0.3);
     }
 
-    /* 3D флакон — только CSS */
+    /* 3D флакон */
     .hero-3d {
       flex: 1 1 320px;
       display: flex;
@@ -319,55 +381,6 @@
       perspective: 800px;
     }
 
-    .bottle {
-      width: 240px;
-      height: 340px;
-      position: relative;
-      transform-style: preserve-3d;
-      animation: spinBottle 18s infinite linear;
-      transition: transform 0.3s ease;
-    }
-
-    .bottle:hover {
-      animation-play-state: paused;
-      transform: rotateY(15deg) scale(1.04);
-    }
-
-    @keyframes spinBottle {
-      0%   { transform: rotateY(0deg) rotateX(4deg); }
-      100% { transform: rotateY(360deg) rotateX(4deg); }
-    }
-
-    /* Грани флакона — имитация 3D */
-    .bottle-face {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 30px 30px 18px 18px;
-      background: linear-gradient(145deg, rgba(212, 175, 55, 0.12), rgba(20, 20, 20, 0.95));
-      border: 1px solid rgba(212, 175, 55, 0.2);
-      box-shadow: inset 0 0 60px rgba(212, 175, 55, 0.04), 0 20px 60px rgba(0,0,0,0.5);
-      backface-visibility: visible;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-serif);
-      font-size: 2.8rem;
-      font-weight: 600;
-      color: var(--gold);
-      letter-spacing: 6px;
-      text-shadow: 0 0 40px rgba(212, 175, 55, 0.2);
-    }
-
-    /* Имитация граней без сложной геометрии — используем трансформации */
-    .bottle-face:nth-child(1) { transform: translateZ(30px); }
-    .bottle-face:nth-child(2) { transform: rotateY(90deg) translateZ(30px); }
-    .bottle-face:nth-child(3) { transform: rotateY(180deg) translateZ(30px); }
-    .bottle-face:nth-child(4) { transform: rotateY(-90deg) translateZ(30px); }
-    .bottle-face:nth-child(5) { transform: rotateX(90deg) translateZ(30px); }
-    .bottle-face:nth-child(6) { transform: rotateX(-90deg) translateZ(30px); }
-
-    /* Упрощаем до красивого вращающегося блока с золотым свечением */
     .bottle-simple {
       width: 220px;
       height: 320px;
@@ -416,12 +429,12 @@
     .catalog {
       position: relative;
       z-index: 1;
-      padding: 60px 0 80px;
+      padding: 40px 0 80px;
     }
 
     .product-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       gap: 32px;
     }
 
@@ -443,6 +456,10 @@
       transition: opacity 0.7s ease, transform 0.7s ease, box-shadow 0.4s ease, border-color 0.4s ease;
     }
 
+    .product-card.hidden {
+      display: none;
+    }
+
     .product-card::before {
       content: '';
       position: absolute;
@@ -462,7 +479,6 @@
       opacity: 1;
     }
 
-    /* "Золотой блеск" при наведении */
     .product-card::after {
       content: '';
       position: absolute;
@@ -485,6 +501,19 @@
       100% { transform: rotate(360deg); }
     }
 
+    .product-card .product-image {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: contain;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      background: rgba(255,255,255,0.02);
+      transition: transform 0.5s ease;
+    }
+    .product-card:hover .product-image {
+      transform: scale(1.04);
+    }
+
     .product-card .gender-tag {
       font-size: 0.7rem;
       text-transform: uppercase;
@@ -505,14 +534,25 @@
     .product-card .brand-name {
       font-size: 0.85rem;
       color: var(--text-secondary);
-      margin-bottom: 10px;
+      margin-bottom: 6px;
     }
 
-    .product-card .price {
-      font-size: 1.3rem;
-      font-weight: 600;
+    .product-card .price-block {
+      margin-bottom: 14px;
+    }
+    .product-card .price-block .size-price {
+      display: inline-block;
+      background: rgba(212, 175, 55, 0.06);
+      border: 1px solid rgba(212, 175, 55, 0.08);
+      border-radius: 20px;
+      padding: 2px 12px;
+      margin: 2px 4px 2px 0;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+    .product-card .price-block .size-price strong {
       color: var(--gold);
-      margin-bottom: 18px;
+      font-weight: 600;
     }
 
     .product-card .btn-add {
@@ -617,12 +657,20 @@
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
         gap: 24px;
       }
+      .search-wrap {
+        flex: 1 1 100%;
+        max-width: 100%;
+        order: 3;
+      }
+      .header .container {
+        justify-content: center;
+      }
     }
 
     @media (max-width: 480px) {
       .header .container {
         flex-wrap: wrap;
-        gap: 12px;
+        gap: 8px;
       }
       .logo {
         font-size: 1.6rem;
@@ -663,6 +711,10 @@
       .section-title {
         font-size: 1.6rem;
       }
+      .filters button {
+        padding: 6px 16px;
+        font-size: 0.8rem;
+      }
     }
 
     @media (max-width: 400px) {
@@ -673,7 +725,6 @@
       }
     }
 
-    /* Стили для скролла */
     ::-webkit-scrollbar {
       width: 4px;
     }
@@ -695,12 +746,17 @@
   <header class="header">
     <div class="container">
       <a href="#" class="logo">GUSTO</a>
+
+      <!-- ПОИСК -->
+      <div class="search-wrap">
+        <input type="text" id="searchInput" placeholder="Поиск ароматов..." autocomplete="off" />
+      </div>
+
       <div class="cart-wrapper">
         <button class="cart-icon" id="cartToggle" aria-label="Корзина">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
           <span class="badge" id="cartCount">0</span>
         </button>
-        <!-- Дропдаун корзины -->
         <div class="cart-dropdown" id="cartDropdown">
           <div id="cartItems">
             <div class="cart-empty-msg">Корзина пуста</div>
@@ -732,6 +788,14 @@
   <section class="catalog" id="catalog">
     <div class="container">
       <h2 class="section-title">Наши <span>ароматы</span></h2>
+
+      <!-- ФИЛЬТРЫ (категории) -->
+      <div class="filters" id="filterButtons">
+        <button class="active" data-filter="all">Все</button>
+        <button data-filter="мужской">Мужские</button>
+        <button data-filter="женский">Женские</button>
+      </div>
+
       <div class="product-grid" id="productGrid"></div>
     </div>
   </section>
@@ -751,17 +815,84 @@
     (function() {
       'use strict';
 
-      // ===== ДАННЫЕ ТОВАРОВ =====
+      // ============================================================
+      // ДАННЫЕ ТОВАРОВ
+      // ============================================================
       const products = [
-        { id: 1, name: 'Oud Noir', brand: 'GUSTO', gender: 'мужской', price: 8900, desc: 'Древесный, восточный, с оттенками уда и шафрана.' },
-        { id: 2, name: 'Cedar & Vetiver', brand: 'GUSTO', gender: 'мужской', price: 7600, desc: 'Кедр, ветивер, бергамот — свежий и благородный.' },
-        { id: 3, name: 'Amber Leather', brand: 'GUSTO', gender: 'мужской', price: 8200, desc: 'Кожа, янтарь, табак — дерзкий и чувственный.' },
-        { id: 4, name: 'Rose Velvet', brand: 'GUSTO', gender: 'женский', price: 9500, desc: 'Роза, пион, ваниль — нежный и утончённый.' },
-        { id: 5, name: 'Jasmine Nuit', brand: 'GUSTO', gender: 'женский', price: 9200, desc: 'Жасмин, мускус, слива — таинственный и глубокий.' }
+        {
+          id: 1,
+          name: 'Oud Noir',
+          brand: 'GUSTO',
+          gender: 'мужской',
+          desc: 'Древесный, восточный, с оттенками уда и шафрана.',
+          image: 'https://placehold.co/400x400/d4af37/0a0a0a?text=OUD',
+          sizes: [
+            { ml: 30, price: 5900 },
+            { ml: 50, price: 8900 },
+            { ml: 100, price: 14900 }
+          ]
+        },
+        {
+          id: 2,
+          name: 'Cedar & Vetiver',
+          brand: 'GUSTO',
+          gender: 'мужской',
+          desc: 'Кедр, ветивер, бергамот — свежий и благородный.',
+          image: 'https://placehold.co/400x400/d4af37/0a0a0a?text=CEDAR',
+          sizes: [
+            { ml: 30, price: 4900 },
+            { ml: 50, price: 7600 },
+            { ml: 100, price: 12900 }
+          ]
+        },
+        {
+          id: 3,
+          name: 'Amber Leather',
+          brand: 'GUSTO',
+          gender: 'мужской',
+          desc: 'Кожа, янтарь, табак — дерзкий и чувственный.',
+          image: 'https://placehold.co/400x400/d4af37/0a0a0a?text=AMBER',
+          sizes: [
+            { ml: 30, price: 5500 },
+            { ml: 50, price: 8200 },
+            { ml: 100, price: 13900 }
+          ]
+        },
+        {
+          id: 4,
+          name: 'Rose Velvet',
+          brand: 'GUSTO',
+          gender: 'женский',
+          desc: 'Роза, пион, ваниль — нежный и утончённый.',
+          image: 'https://placehold.co/400x400/d4af37/0a0a0a?text=ROSE',
+          sizes: [
+            { ml: 30, price: 6400 },
+            { ml: 50, price: 9500 },
+            { ml: 100, price: 15900 }
+          ]
+        },
+        {
+          id: 5,
+          name: 'Jasmine Nuit',
+          brand: 'GUSTO',
+          gender: 'женский',
+          desc: 'Жасмин, мускус, слива — таинственный и глубокий.',
+          image: 'https://placehold.co/400x400/d4af37/0a0a0a?text=JASMINE',
+          sizes: [
+            { ml: 30, price: 6200 },
+            { ml: 50, price: 9200 },
+            { ml: 100, price: 15500 }
+          ]
+        }
       ];
 
-      // ===== СОСТОЯНИЕ =====
+      // ============================================================
+      // СОСТОЯНИЕ
+      // ============================================================
       let cart = [];
+      let currentFilter = 'all';
+      let searchQuery = '';
+
       const cartToggle = document.getElementById('cartToggle');
       const cartDropdown = document.getElementById('cartDropdown');
       const cartItemsEl = document.getElementById('cartItems');
@@ -769,27 +900,57 @@
       const cartTotalEl = document.getElementById('cartTotal');
       const checkoutBtn = document.getElementById('checkoutBtn');
       const toastEl = document.getElementById('toast');
+      const grid = document.getElementById('productGrid');
+      const searchInput = document.getElementById('searchInput');
+      const filterButtons = document.querySelectorAll('#filterButtons button');
+
       let toastTimer = null;
 
-      // ===== РЕНДЕР КАТАЛОГА =====
-      const grid = document.getElementById('productGrid');
-
+      // ============================================================
+      // РЕНДЕР КАТАЛОГА
+      // ============================================================
       function renderProducts() {
         grid.innerHTML = '';
-        products.forEach((p, index) => {
+
+        const filtered = products.filter(p => {
+          const matchGender = currentFilter === 'all' || p.gender === currentFilter;
+          const matchSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                              p.brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                              p.desc.toLowerCase().includes(searchQuery.toLowerCase());
+          return matchGender && matchSearch;
+        });
+
+        if (filtered.length === 0) {
+          grid.innerHTML = `
+            <div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--text-secondary);font-size:1.2rem;">
+              Ароматов не найдено
+            </div>
+          `;
+          return;
+        }
+
+        filtered.forEach((p, index) => {
           const card = document.createElement('div');
           card.className = 'product-card';
           card.dataset.index = index;
+
+          let sizesHtml = '';
+          p.sizes.forEach(s => {
+            sizesHtml += `<span class="size-price">${s.ml} мл <strong>${s.price.toLocaleString()} ₽</strong></span>`;
+          });
+
           card.innerHTML = `
+            <img class="product-image" src="${p.image}" alt="${p.name}" loading="lazy" />
             <div class="gender-tag">${p.gender}</div>
             <h3>${p.name}</h3>
             <div class="brand-name">${p.brand}</div>
-            <div class="price">${p.price.toLocaleString()} ₽</div>
+            <div class="price-block">${sizesHtml}</div>
             <button class="btn-add" data-id="${p.id}">Добавить в корзину</button>
           `;
+
           grid.appendChild(card);
 
-          // Анимация появления при скролле (Intersection Observer)
+          // Анимация появления
           const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
               if (entry.isIntersecting) {
@@ -800,7 +961,6 @@
           }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
           observer.observe(card);
 
-          // Обработчик кнопки "Добавить"
           const btn = card.querySelector('.btn-add');
           btn.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -810,17 +970,29 @@
         });
       }
 
-      // ===== КОРЗИНА =====
+      // ============================================================
+      // КОРЗИНА
+      // ============================================================
       function addToCart(productId) {
         const existing = cart.find(item => item.id === productId);
         if (existing) {
           existing.qty += 1;
         } else {
           const product = products.find(p => p.id === productId);
-          if (product) cart.push({ ...product, qty: 1 });
+          if (product) {
+            const defaultSize = product.sizes.find(s => s.ml === 50) || product.sizes[0];
+            cart.push({
+              id: product.id,
+              name: product.name,
+              price: defaultSize.price,
+              ml: defaultSize.ml,
+              qty: 1
+            });
+          }
         }
         updateCartUI();
-        showToast(`<strong>${products.find(p => p.id === productId).name}</strong> добавлен в корзину`);
+        const productName = products.find(p => p.id === productId)?.name || '';
+        showToast(`<strong>${productName}</strong> добавлен в корзину`);
       }
 
       function removeFromCart(productId) {
@@ -850,7 +1022,7 @@
         cart.forEach(item => {
           html += `
             <div class="cart-item" data-id="${item.id}">
-              <span class="name">${item.name}</span>
+              <span class="name">${item.name} (${item.ml} мл)</span>
               <span class="qty">×${item.qty}</span>
               <span class="price">${(item.price * item.qty).toLocaleString()} ₽</span>
             </div>
@@ -859,7 +1031,6 @@
         cartItemsEl.innerHTML = html;
         cartTotalEl.textContent = getTotalPrice().toLocaleString() + ' ₽';
 
-        // Клик по товару для удаления (опционально)
         document.querySelectorAll('.cart-item').forEach(el => {
           el.style.cursor = 'pointer';
           el.addEventListener('click', function() {
@@ -870,7 +1041,9 @@
         });
       }
 
-      // ===== УВЕДОМЛЕНИЕ =====
+      // ============================================================
+      // УВЕДОМЛЕНИЕ
+      // ============================================================
       function showToast(message) {
         toastEl.innerHTML = message;
         toastEl.classList.add('show');
@@ -880,13 +1053,15 @@
         }, 2800);
       }
 
-      // ===== ОФОРМЛЕНИЕ ЗАКАЗА → TELEGRAM =====
+      // ============================================================
+      // ОФОРМЛЕНИЕ ЗАКАЗА → TELEGRAM
+      // ============================================================
       function getOrderMessage() {
         if (cart.length === 0) {
           showToast('Корзина пуста, добавьте товары');
           return null;
         }
-        const items = cart.map(item => `${item.name} ×${item.qty}`).join(', ');
+        const items = cart.map(item => `${item.name} (${item.ml} мл) ×${item.qty}`).join(', ');
         const total = getTotalPrice().toLocaleString();
         return `Здравствуйте! Хочу заказать в GUSTO: ${items}. Общая сумма: ${total} ₽.`;
       }
@@ -898,10 +1073,31 @@
         // Замените YOUR_USERNAME на ваш юзернейм в Telegram
         const url = `https://t.me/ваш_юзернейм?text=${encodeURIComponent(msg)}`;
         window.open(url, '_blank');
-        // Не очищаем корзину, чтобы покупатель мог вернуться
       });
 
-      // ===== ТОГГЛ КОРЗИНЫ =====
+      // ============================================================
+      // ФИЛЬТРЫ
+      // ============================================================
+      filterButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+          filterButtons.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          currentFilter = this.dataset.filter;
+          renderProducts();
+        });
+      });
+
+      // ============================================================
+      // ПОИСК
+      // ============================================================
+      searchInput.addEventListener('input', function() {
+        searchQuery = this.value;
+        renderProducts();
+      });
+
+      // ============================================================
+      // ТОГГЛ КОРЗИНЫ
+      // ============================================================
       cartToggle.addEventListener('click', (e) => {
         e.stopPropagation();
         cartDropdown.classList.toggle('open');
@@ -913,7 +1109,9 @@
         }
       });
 
-      // ===== ЧАСТИЦЫ (CANVAS) =====
+      // ============================================================
+      // ЧАСТИЦЫ (CANVAS)
+      // ============================================================
       function initParticles() {
         const canvas = document.getElementById('particles-canvas');
         const ctx = canvas.getContext('2d');
@@ -966,12 +1164,13 @@
         });
       }
 
-      // ===== ИНИЦИАЛИЗАЦИЯ =====
+      // ============================================================
+      // ИНИЦИАЛИЗАЦИЯ
+      // ============================================================
       renderProducts();
       updateCartUI();
       initParticles();
 
-      // Добавляем плавное появление для карточек, которые уже видны сразу
       setTimeout(() => {
         document.querySelectorAll('.product-card').forEach(card => {
           const rect = card.getBoundingClientRect();
@@ -981,8 +1180,9 @@
         });
       }, 200);
 
-      console.log('🚀 GUSTO — сайт загружен. Премиум-парфюмерия.');
+      console.log('🚀 GUSTO — сайт загружен. Категории и поиск активны.');
     })();
   </script>
+
 </body>
 </html>
