@@ -586,6 +586,44 @@
     .size-selector .size-btn .price-tag {
       font-weight: 500;
       margin-left: 4px;
+      color: var(--gold-light);
+    }
+
+    /* ===== ПАМЯТКА ДЛЯ ПОКУПАТЕЛЯ ===== */
+    .product-reminder {
+      background: rgba(212, 175, 55, 0.04);
+      border: 1px solid rgba(212, 175, 55, 0.08);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-top: 12px;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      transition: var(--transition);
+    }
+    .product-reminder strong {
+      color: var(--gold);
+      font-weight: 600;
+      display: block;
+      margin-bottom: 2px;
+      font-size: 0.8rem;
+    }
+    .product-reminder ol {
+      padding-left: 18px;
+      margin: 2px 0;
+    }
+    .product-reminder li {
+      margin-bottom: 0px;
+    }
+    .product-reminder .tg-link {
+      color: var(--gold);
+      font-weight: 500;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .product-card:hover .product-reminder {
+      border-color: rgba(212, 175, 55, 0.2);
+      background: rgba(212, 175, 55, 0.06);
     }
 
     .product-card .btn-add {
@@ -602,6 +640,7 @@
       transition: var(--transition);
       position: relative;
       z-index: 2;
+      margin-top: 6px;
     }
     .product-card .btn-add:hover {
       background: var(--gold);
@@ -764,6 +803,10 @@
         height: 24px;
         font-size: 0.8rem;
       }
+      .product-reminder {
+        font-size: 0.65rem;
+        padding: 8px 10px;
+      }
     }
 
     @media (max-width: 400px) {
@@ -805,7 +848,7 @@
         </button>
         <div class="cart-dropdown" id="cartDropdown">
           <div id="cartItems"><div class="cart-empty-msg">Корзина пуста</div></div>
-          <div class="cart-total"><span>Итого</span><span class="sum" id="cartTotal">0 ₽</span></div>
+          <div class="cart-total"><span>Итого</span><span class="sum" id="cartTotal">Цена в Telegram</span></div>
           <a href="#" class="btn-checkout" id="checkoutBtn">Оформить заказ</a>
         </div>
       </div>
@@ -853,8 +896,8 @@
 
       // ============================================================
       // ДАННЫЕ ТОВАРОВ
-      // Убраны вкусы GUSTO, добавлены новые мужские и женские ароматы
-      // Цены: Рандеву + наценка 8-11% + доставка (~200-300 руб)
+      // ОБЪЁМЫ ПРОВЕРЕНЫ ПО ОФИЦИАЛЬНЫМ ИСТОЧНИКАМ
+      // ЦЕНЫ ОБСУЖДАЮТСЯ В TELEGRAM
       // ============================================================
       const products = [
         // === МУЖСКИЕ (Tom Ford) ===
@@ -866,8 +909,9 @@
           desc: 'Кожа, малина и шафран. Смелый, дымный, чувственный.',
           image: 'https://avatars.mds.yandex.net/i?id=89bba4f3b94aa9e27f3afc1fbbb5b6feb2f121ba-10415032-images-thumbs&n=13',
           sizes: [
-            { ml: 50, price: 17200 },
-            { ml: 100, price: 26900 }
+            { ml: 30, price: '—' },
+            { ml: 50, price: '—' },
+            { ml: 100, price: '—' }
           ]
         },
         {
@@ -878,8 +922,9 @@
           desc: 'Лаванда, имбирь и дуб. Аристократичный, свежий, бархатный.',
           image: 'https://avatars.mds.yandex.net/i?id=52d3c77ca6edca8d8d1b5d68f4b39a38ed4d7123-11509297-images-thumbs&n=13',
           sizes: [
-            { ml: 50, price: 16800 },
-            { ml: 100, price: 25900 }
+            { ml: 30, price: '—' },
+            { ml: 50, price: '—' },
+            { ml: 100, price: '—' }
           ]
         },
         {
@@ -890,8 +935,9 @@
           desc: 'Древесный, восточный — уд, сандал, кардамон.',
           image: 'https://avatars.mds.yandex.net/i?id=1e8e4fc8a5a8f8e4e8e4e8e4e8e4e8e4e8e4e8e4-10415032-images-thumbs&n=13',
           sizes: [
-            { ml: 50, price: 18900 },
-            { ml: 100, price: 28900 }
+            { ml: 30, price: '—' },
+            { ml: 50, price: '—' },
+            { ml: 100, price: '—' }
           ]
         },
         {
@@ -902,60 +948,12 @@
           desc: 'Пряный, восточный — кардамон, мускатный орех, сандал.',
           image: 'https://avatars.mds.yandex.net/i?id=2f8e4fc8a5a8f8e4e8e4e8e4e8e4e8e4e8e4e8e4-10415032-images-thumbs&n=13',
           sizes: [
-            { ml: 50, price: 14900 },
-            { ml: 100, price: 22900 }
+            { ml: 30, price: '—' },
+            { ml: 50, price: '—' },
+            { ml: 100, price: '—' }
           ]
         },
-        // === ЖЕНСКИЕ (Tom Ford) ===
-        {
-          id: 5,
-          name: 'Lost Cherry',
-          brand: 'Tom Ford',
-          gender: 'женский',
-          desc: 'Черная вишня, миндаль и жасмин. Сладкий, опьяняющий, запретный.',
-          image: 'https://avatars.mds.yandex.net/i?id=a543836f153a9476b3d3fb1e35cd86db99d8bc99-5091797-images-thumbs&n=13',
-          sizes: [
-            { ml: 50, price: 25900 },
-            { ml: 100, price: 39900 }
-          ]
-        },
-        {
-          id: 6,
-          name: 'Black Orchid',
-          brand: 'Tom Ford',
-          gender: 'женский',
-          desc: 'Трюфель, черная орхидея, черная слива. Таинственный, чувственный.',
-          image: 'https://avatars.mds.yandex.net/i?id=3a8e4fc8a5a8f8e4e8e4e8e4e8e4e8e4e8e4e8e4-10415032-images-thumbs&n=13',
-          sizes: [
-            { ml: 50, price: 12900 },
-            { ml: 100, price: 19900 }
-          ]
-        },
-        {
-          id: 7,
-          name: 'Velvet Orchid',
-          brand: 'Tom Ford',
-          gender: 'женский',
-          desc: 'Мед, роза, мускус. Нежный, утончённый, бархатистый.',
-          image: 'https://avatars.mds.yandex.net/i?id=4b8e4fc8a5a8f8e4e8e4e8e4e8e4e8e4e8e4e8e4-10415032-images-thumbs&n=13',
-          sizes: [
-            { ml: 50, price: 11900 },
-            { ml: 100, price: 18900 }
-          ]
-        },
-        {
-          id: 8,
-          name: 'Soleil Blanc',
-          brand: 'Tom Ford',
-          gender: 'женский',
-          desc: 'Тубероза, кокос, бергамот. Солнечный, тёплый, кокетливый.',
-          image: 'https://avatars.mds.yandex.net/i?id=5c8e4fc8a5a8f8e4e8e4e8e4e8e4e8e4e8e4e8e4-10415032-images-thumbs&n=13',
-          sizes: [
-            { ml: 50, price: 14900 },
-            { ml: 100, price: 22900 }
-          ]
-        },
-        // === НОВЫЕ МУЖСКИЕ АРОМАТЫ ===
+        // === НОВЫЕ МУЖСКИЕ ===
         {
           id: 9,
           name: 'Baccarat Rouge 540',
@@ -964,8 +962,9 @@
           desc: 'Древесный, янтарный, с оттенками жасмина и шафрана. Икона современной парфюмерии.',
           image: 'https://avatars.mds.yandex.net/i?id=6d8e4fc8a5a8f8e4e8e4e8e4e8e4e8e4e8e4e8e4-10415032-images-thumbs&n=13',
           sizes: [
-            { ml: 50, price: 22900 },
-            { ml: 100, price: 34900 }
+            { ml: 35, price: '—' },
+            { ml: 70, price: '—' },
+            { ml: 200, price: '—' }
           ]
         },
         {
@@ -976,8 +975,8 @@
           desc: 'Ананас, бергамот, дубовый мох. Свежий, энергичный, статусный.',
           image: 'https://avatars.mds.yandex.net/i?id=7e8e4fc8a5a8f8e4e8e4e8e4e8e4e8e4e8e4e8e4-10415032-images-thumbs&n=13',
           sizes: [
-            { ml: 50, price: 19900 },
-            { ml: 100, price: 31900 }
+            { ml: 50, price: '—' },
+            { ml: 100, price: '—' }
           ]
         },
         {
@@ -988,11 +987,77 @@
           desc: 'Лаванда, корица, мускатный орех. Брутальный, пряный, с мощным шлейфом.',
           image: 'https://avatars.mds.yandex.net/i?id=8f8e4fc8a5a8f8e4e8e4e8e4e8e4e8e4e8e4e8e4-10415032-images-thumbs&n=13',
           sizes: [
-            { ml: 50, price: 15900 },
-            { ml: 100, price: 24900 }
+            { ml: 60, price: '—' },
+            { ml: 100, price: '—' }
           ]
         },
-        // === НОВЫЕ ЖЕНСКИЕ АРОМАТЫ ===
+        {
+          id: 15,
+          name: 'Layton',
+          brand: 'Parfums de Marly',
+          gender: 'мужской',
+          desc: 'Яблоко, лаванда, ваниль. Элегантный, гурманский, с характером.',
+          image: 'https://avatars.mds.yandex.net/i?id=ci8e4fc8a5a8f8e4e8e4e8e4e8e4e8e4e8e4e8e4-10415032-images-thumbs&n=13',
+          sizes: [
+            { ml: 75, price: '—' },
+            { ml: 125, price: '—' }
+          ]
+        },
+
+        // === ЖЕНСКИЕ (Tom Ford) ===
+        {
+          id: 5,
+          name: 'Lost Cherry',
+          brand: 'Tom Ford',
+          gender: 'женский',
+          desc: 'Черная вишня, миндаль и жасмин. Сладкий, опьяняющий, запретный.',
+          image: 'https://avatars.mds.yandex.net/i?id=a543836f153a9476b3d3fb1e35cd86db99d8bc99-5091797-images-thumbs&n=13',
+          sizes: [
+            { ml: 30, price: '—' },
+            { ml: 50, price: '—' },
+            { ml: 100, price: '—' }
+          ]
+        },
+        {
+          id: 6,
+          name: 'Black Orchid',
+          brand: 'Tom Ford',
+          gender: 'женский',
+          desc: 'Трюфель, черная орхидея, черная слива. Таинственный, чувственный.',
+          image: 'https://avatars.mds.yandex.net/i?id=3a8e4fc8a5a8f8e4e8e4e8e4e8e4e8e4e8e4e8e4-10415032-images-thumbs&n=13',
+          sizes: [
+            { ml: 30, price: '—' },
+            { ml: 50, price: '—' },
+            { ml: 100, price: '—' }
+          ]
+        },
+        {
+          id: 7,
+          name: 'Velvet Orchid',
+          brand: 'Tom Ford',
+          gender: 'женский',
+          desc: 'Мед, роза, мускус. Нежный, утончённый, бархатистый.',
+          image: 'https://avatars.mds.yandex.net/i?id=4b8e4fc8a5a8f8e4e8e4e8e4e8e4e8e4e8e4e8e4-10415032-images-thumbs&n=13',
+          sizes: [
+            { ml: 30, price: '—' },
+            { ml: 50, price: '—' },
+            { ml: 100, price: '—' }
+          ]
+        },
+        {
+          id: 8,
+          name: 'Soleil Blanc',
+          brand: 'Tom Ford',
+          gender: 'женский',
+          desc: 'Тубероза, кокос, бергамот. Солнечный, тёплый, кокетливый.',
+          image: 'https://avatars.mds.yandex.net/i?id=5c8e4fc8a5a8f8e4e8e4e8e4e8e4e8e4e8e4e8e4-10415032-images-thumbs&n=13',
+          sizes: [
+            { ml: 30, price: '—' },
+            { ml: 50, price: '—' },
+            { ml: 100, price: '—' }
+          ]
+        },
+        // === НОВЫЕ ЖЕНСКИЕ ===
         {
           id: 12,
           name: 'Good Girl',
@@ -1001,8 +1066,9 @@
           desc: 'Миндаль, жасмин, кофе. Соблазнительный, сладкий, дерзкий.',
           image: 'https://avatars.mds.yandex.net/i?id=9g8e4fc8a5a8f8e4e8e4e8e4e8e4e8e4e8e4e8e4-10415032-images-thumbs&n=13',
           sizes: [
-            { ml: 50, price: 10900 },
-            { ml: 100, price: 16900 }
+            { ml: 30, price: '—' },
+            { ml: 50, price: '—' },
+            { ml: 80, price: '—' }
           ]
         },
         {
@@ -1013,8 +1079,9 @@
           desc: 'Ирис, жасмин, пачули. Оптимистичный, нежный, женственный.',
           image: 'https://avatars.mds.yandex.net/i?id=ah8e4fc8a5a8f8e4e8e4e8e4e8e4e8e4e8e4e8e4-10415032-images-thumbs&n=13',
           sizes: [
-            { ml: 50, price: 9900 },
-            { ml: 100, price: 14900 }
+            { ml: 30, price: '—' },
+            { ml: 50, price: '—' },
+            { ml: 75, price: '—' }
           ]
         },
         {
@@ -1025,21 +1092,8 @@
           desc: 'Апельсин, жасмин, пачули. Элегантный, утончённый, вне времени.',
           image: 'https://avatars.mds.yandex.net/i?id=bi8e4fc8a5a8f8e4e8e4e8e4e8e4e8e4e8e4e8e4-10415032-images-thumbs&n=13',
           sizes: [
-            { ml: 50, price: 13900 },
-            { ml: 100, price: 21900 }
-          ]
-        },
-        // === ДОПОЛНИТЕЛЬНЫЙ НИШЕВЫЙ МУЖСКОЙ ===
-        {
-          id: 15,
-          name: 'Layton',
-          brand: 'Parfums de Marly',
-          gender: 'мужской',
-          desc: 'Яблоко, лаванда, ваниль. Элегантный, гурманский, с характером.',
-          image: 'https://avatars.mds.yandex.net/i?id=ci8e4fc8a5a8f8e4e8e4e8e4e8e4e8e4e8e4e8e4-10415032-images-thumbs&n=13',
-          sizes: [
-            { ml: 50, price: 17900 },
-            { ml: 100, price: 27900 }
+            { ml: 50, price: '—' },
+            { ml: 100, price: '—' }
           ]
         }
       ];
@@ -1065,7 +1119,7 @@
       let toastTimer = null;
 
       // ============================================================
-      // РЕНДЕР КАТАЛОГА
+      // РЕНДЕР КАТАЛОГА С ПАМЯТКОЙ
       // ============================================================
       function renderProducts() {
         grid.innerHTML = '';
@@ -1091,8 +1145,21 @@
           let sizesHtml = '';
           p.sizes.forEach((s, idx) => {
             const active = idx === 0 ? 'active' : '';
-            sizesHtml += `<button class="size-btn ${active}" data-ml="${s.ml}" data-price="${s.price}">${s.ml} мл <span class="price-tag">${s.price.toLocaleString()} ₽</span></button>`;
+            sizesHtml += `<button class="size-btn ${active}" data-ml="${s.ml}" data-price="${s.price}">${s.ml} мл <span class="price-tag">${s.price}</span></button>`;
           });
+
+          // ===== ПАМЯТКА ИЗ 4 ПУНКТОВ =====
+          const reminderHtml = `
+            <div class="product-reminder">
+              <strong>📋 ПАМЯТКА ПЕРЕД ЗАКАЗОМ:</strong>
+              <ol>
+                <li>📸 Сделайте скриншот этой карточки с выбранным объёмом</li>
+                <li>💬 Напишите нам в Telegram — кнопка ниже</li>
+                <li>📦 Укажите, какой объём вас интересует</li>
+                <li>💰 Все цены и детали обсуждаются в личном сообщении</li>
+              </ol>
+            </div>
+          `;
 
           card.innerHTML = `
             <img class="product-image" src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.src='https://placehold.co/400x400/d4af37/0a0a0a?text=${p.name.replace(/ /g,'+')}'" />
@@ -1100,7 +1167,8 @@
             <h3>${p.name}</h3>
             <div class="brand-name">${p.brand}</div>
             <div class="size-selector" data-product-id="${p.id}">${sizesHtml}</div>
-            <button class="btn-add" data-id="${p.id}">Добавить в корзину</button>
+            ${reminderHtml}
+            <button class="btn-add" data-id="${p.id}">📱 Заказать в Telegram</button>
           `;
 
           grid.appendChild(card);
@@ -1131,11 +1199,10 @@
             const activeSize = card.querySelector('.size-btn.active');
             if (activeSize) {
               const ml = parseInt(activeSize.dataset.ml);
-              const price = parseInt(activeSize.dataset.price);
-              addToCart(id, ml, price);
+              addToCart(id, ml);
             } else {
               const firstSize = p.sizes[0];
-              addToCart(id, firstSize.ml, firstSize.price);
+              addToCart(id, firstSize.ml);
             }
           });
         });
@@ -1144,7 +1211,7 @@
       // ============================================================
       // КОРЗИНА
       // ============================================================
-      function addToCart(productId, ml, price) {
+      function addToCart(productId, ml) {
         const product = products.find(p => p.id === productId);
         if (!product) return;
 
@@ -1157,7 +1224,6 @@
             name: product.name,
             brand: product.brand,
             ml: ml,
-            price: price,
             qty: 1
           });
         }
@@ -1185,17 +1251,13 @@
         return cart.reduce((sum, item) => sum + item.qty, 0);
       }
 
-      function getTotalPrice() {
-        return cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-      }
-
       function updateCartUI() {
         const totalItems = getTotalItems();
         cartCountEl.textContent = totalItems;
 
         if (cart.length === 0) {
           cartItemsEl.innerHTML = `<div class="cart-empty-msg">Корзина пуста</div>`;
-          cartTotalEl.textContent = '0 ₽';
+          cartTotalEl.textContent = 'Цена в Telegram';
           return;
         }
 
@@ -1212,12 +1274,12 @@
                 <span>${item.qty}</span>
                 <button class="qty-plus" data-id="${item.id}" data-ml="${item.ml}">+</button>
               </div>
-              <span class="item-price">${(item.price * item.qty).toLocaleString()} ₽</span>
+              <span class="item-price">Цена в Telegram</span>
             </div>
           `;
         });
         cartItemsEl.innerHTML = html;
-        cartTotalEl.textContent = getTotalPrice().toLocaleString() + ' ₽';
+        cartTotalEl.textContent = 'Цена в Telegram';
 
         document.querySelectorAll('.qty-minus').forEach(btn => {
           btn.addEventListener('click', function(e) {
@@ -1258,8 +1320,7 @@
           return null;
         }
         const items = cart.map(item => `${item.name} (${item.ml} мл) ×${item.qty}`).join(', ');
-        const total = getTotalPrice().toLocaleString();
-        return `Здравствуйте! Хочу заказать в GUSTO: ${items}. Общая сумма: ${total} ₽.`;
+        return `Здравствуйте! Хочу заказать в GUSTO: ${items}. Уточните, пожалуйста, стоимость и наличие.`;
       }
 
       checkoutBtn.addEventListener('click', function(e) {
@@ -1375,7 +1436,7 @@
         });
       }, 200);
 
-      console.log('🚀 GUSTO — магазин парфюма загружен. 15 ароматов с актуальными ценами.');
+      console.log('🚀 GUSTO — магазин парфюма загружен. Все цены обсуждаются в Telegram.');
     })();
   </script>
 
